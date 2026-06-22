@@ -15,10 +15,10 @@ Insluit-snippets voor tool 2 en 3:
 
 ```html
 <div id="inkomsten-limiet-tool"></div>
-<script src="https://cdn.jsdelivr.net/gh/USER/nestor-tools@v1/inkomsten-limiet.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/tibodeblaere-ai/tools-website@v1/inkomsten-limiet.js" defer></script>
 
 <div id="flexi-checker-container-leadgen"></div>
-<script src="https://cdn.jsdelivr.net/gh/USER/nestor-tools@v1/flexi-pc-checker.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/tibodeblaere-ai/tools-website@v1/flexi-pc-checker.js" defer></script>
 ```
 
 > Tool 3 stuurt e-mailleads naar een Google Apps Script (`scriptUrl` in CONFIG).
@@ -26,11 +26,11 @@ Insluit-snippets voor tool 2 en 3:
 
 ## Insluiten op een pagina (HubSpot of elke andere site)
 
-Plak dit waar de tool moet verschijnen. Vervang `USER` door je GitHub-gebruikersnaam.
+Plak dit waar de tool moet verschijnen.
 
 ```html
 <div id="flexi-job-tool"></div>
-<script src="https://cdn.jsdelivr.net/gh/USER/nestor-tools@v1/flexi-job.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/tibodeblaere-ai/tools-website@v1/flexi-job.js" defer></script>
 ```
 
 - Staat er geen `<div id="flexi-job-tool">` op de pagina, dan doet het script niets.
@@ -62,7 +62,7 @@ blijft die versie stabiel gecachet (caching-probleem opgelost).
 Gebruik `@latest` in plaats van een versie-tag:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/USER/nestor-tools@latest/flexi-job.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/tibodeblaere-ai/tools-website@latest/flexi-job.js" defer></script>
 ```
 
 Dan komt elke push automatisch overal door (kortere cache, iets trager).
