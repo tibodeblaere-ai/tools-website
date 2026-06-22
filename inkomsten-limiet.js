@@ -35,7 +35,6 @@
     stepNumbers: {
       "stap-1": 1,
       "stap-2-pensioen": 2,
-      "stap-3-partner-pensioen": 2,
       "stap-kinderen-ten-laste": 3,
       "stap-resultaat": 4
     },
@@ -53,18 +52,11 @@
         title: "Kies de situatie die op jou van toepassing is:",
         choices: [
           { label: "Wettelijk gepensioneerd (of 65 jaar, of 45 jaar loopbaan)", next: "stap-kinderen-ten-laste", path: "pensioen_normaal" },
-          { label: "Met vervroegd pensioen (nog geen 65 jaar)", next: "stap-3-partner-pensioen" },
+          { label: "Met vervroegd pensioen (nog geen 65 jaar)", next: "stap-kinderen-ten-laste", path: "pensioen_vervroegd" },
           { label: "Pensioen in een speciaal stelsel (bv. vliegend personeel)", next: "stap-kinderen-ten-laste", path: "speciaal_stelsel" },
           { label: "Een gezinspensioen", next: "stap-kinderen-ten-laste", path: "gezinspensioen" },
           { label: "Ik oefen een flexi-job uit en ben wettelijk gepensioneerd", result: "flexijob_wettelijk" },
           { label: "Ik oefen een flexi-job uit en ben vervroegd gepensioneerd", result: "flexijob_vervroegd" }
-        ]
-      },
-      "stap-3-partner-pensioen": {
-        title: "Ontvangt je huwelijkspartner een eigen rustpensioen?",
-        choices: [
-          { label: "Ja", next: "stap-kinderen-ten-laste", path: "pensioen_wel_partner" },
-          { label: "Nee", next: "stap-kinderen-ten-laste", path: "pensioen_geen_partner" }
         ]
       },
       "stap-kinderen-ten-laste": {
@@ -81,14 +73,12 @@
     results: {
       pensioen_normaal:     { ja: "onbegrensd", nee: "onbegrensd" },
       overgangsuitkering:   { ja: "onbegrensd", nee: "onbegrensd" },
-      pensioen_geen_partner:{ ja: { werknemer: "15.648 EUR", zelfstandige: "12.519 EUR" },
+      pensioen_vervroegd:   { ja: { werknemer: "15.648 EUR", zelfstandige: "12.519 EUR" },
                               nee: { werknemer: "10.432 EUR", zelfstandige: "8.346 EUR" } },
-      pensioen_wel_partner: { ja: { werknemer: "35.333 EUR (+5.889 EUR per kind)", zelfstandige: "28.266 EUR (+4.711 EUR per kind)" },
-                              nee: { werknemer: "23.555 EUR", zelfstandige: "18.844 EUR" } },
       speciaal_stelsel:     { ja: { werknemer: "36.652 EUR", zelfstandige: "29.321 EUR" },
                               nee: { werknemer: "30.132 EUR", zelfstandige: "24.105 EUR" } },
-      gezinspensioen:       { ja: { werknemer: "35.544 EUR", zelfstandige: "28.435 EUR" },
-                              nee: { werknemer: "35.544 EUR", zelfstandige: "28.435 EUR" } },
+      gezinspensioen:       { ja: { werknemer: "15.648 EUR", zelfstandige: "12.519 EUR" },
+                              nee: { werknemer: "10.432 EUR", zelfstandige: "8.346 EUR" } },
       flexijob_wettelijk:   { ja: "onbegrensd", nee: "onbegrensd" },
       flexijob_vervroegd:   { ja: { werknemer: "8.121 EUR", zelfstandige: "N.v.t." },
                               nee: { werknemer: "8.121 EUR", zelfstandige: "N.v.t." } }
