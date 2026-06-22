@@ -9,14 +9,20 @@ overal ingesloten met een klein snippet. Eén keer aanpassen = overal bijgewerkt
 |---|---|---|
 | `flexi-job.js` | Flexi-Job check | `<div id="flexi-job-tool">` |
 | `inkomsten-limiet.js` | Hoeveel mag je bijverdienen? | `<div id="inkomsten-limiet-tool">` |
-| _(volgt)_ | Tool 3 | |
+| `flexi-pc-checker.js` | PC-checker + lead-formulier | `<div id="flexi-checker-container-leadgen">` |
 
-Insluit-snippet voor tool 2:
+Insluit-snippets voor tool 2 en 3:
 
 ```html
 <div id="inkomsten-limiet-tool"></div>
 <script src="https://cdn.jsdelivr.net/gh/USER/nestor-tools@v1/inkomsten-limiet.js" defer></script>
+
+<div id="flexi-checker-container-leadgen"></div>
+<script src="https://cdn.jsdelivr.net/gh/USER/nestor-tools@v1/flexi-pc-checker.js" defer></script>
 ```
+
+> Tool 3 stuurt e-mailleads naar een Google Apps Script (`scriptUrl` in CONFIG).
+> Dat is een publiek endpoint — geen geheim, maar wel zichtbaar in de repo.
 
 ## Insluiten op een pagina (HubSpot of elke andere site)
 
