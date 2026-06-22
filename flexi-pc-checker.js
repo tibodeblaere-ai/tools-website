@@ -34,13 +34,19 @@
 
     disclaimer: "<strong>Disclaimer:</strong> Deze tool is louter informatief. Er kunnen geen rechten aan worden ontleend. Raadpleeg altijd de officiële bronnen voor de meest actuele en correcte informatie.",
 
-    // Sectoren die pas VANAF 1 JULI 2026 beschikbaar zijn (bv. zorgberoepen).
-    // Komt een ingevoerd PC hierin voor, dan tonen we onderstaande banner bij het resultaat.
+    // Caveat-banner bij REEDS toegelaten sectoren die nog een 1-juli-voorwaarde hebben (bv. zorgberoepen, PC 330).
     vanafJuli2026: ["330"],
     vanafJuliNote: "⏳ <strong>Let op:</strong> voor (zorg)beroepen in deze sector wordt flexi-jobben pas mogelijk <strong>vanaf 1 juli 2026</strong>.",
 
-    // Algemene boodschap voor sectoren die (nog) niet op de lijst staan.
-    alleSectorenNote: "Maar goed nieuws: vanaf <strong>1 juli 2026</strong> wordt flexi-jobben mogelijk in alle sectoren (behalve sectoren met een geldige opt-out, zoals de landbouw). (Onder voorbehoud)",
+    // Sectoren met een geldige OPT-OUT: komen ook NA 1 juli 2026 niet in aanmerking (bv. landbouw PC 144).
+    // Vul hier aan zodra een sector officieel een opt-out neemt.
+    optOut: ["144"],
+    optOutText: "Nee, jouw sector (PC {pc}) heeft een geldige opt-out en komt niet in aanmerking voor flexi-jobs — ook niet na 1 juli 2026.",
+
+    // Catch-all: elke andere geldige sector krijgt groen licht vanaf 1 juli 2026.
+    // Hierdoor blijft het antwoord ook na 1 juli correct en hoeft de tool niet meer bijgewerkt te worden.
+    nieuwJuliHeading: "Ja! Vanaf 1 juli 2026 komt jouw sector in aanmerking.",
+    nieuwJuliText: "Vanaf <strong>1 juli 2026</strong> wordt flexi-jobben mogelijk in alle sectoren, behalve die met een geldige opt-out. Jouw sector (PC {pc}) hoort daarbij. (Onder voorbehoud)",
 
     // Goedgekeurde paritaire comités (PC's)
     eligiblePCs: [
@@ -73,8 +79,8 @@
     leadForm: {
       defaultTitle: "Blijf op de hoogte of ontvang hulp",
       defaultDesc: "Laat je e-mailadres achter en wij contacteren je met specifieke info voor jouw sector.",
-      nietTitle: "Blijf op de hoogte voor 2026",
-      nietDesc: "Wil je als eerste weten wanneer je kan starten? Laat je gegevens achter.",
+      nietTitle: "Klaar om te starten?",
+      nietDesc: "Laat je e-mailadres achter, dan helpen we je op weg met een flexi-job in jouw sector.",
       emailPlaceholder: "jouw@email.be",
       sendLabel: "Verstuur"
     }
@@ -191,6 +197,7 @@ ${P} .${ROOT}-msg-error{color:var(--fpc-primary);margin-top:8px}
     var r = build(mount);
     var eligible = new Set(CONFIG.eligiblePCs);
     var vanafJuli = new Set(CONFIG.vanafJuli2026);
+    var optOut = new Set(CONFIG.optOut);
     var lastTrackedPCValue = null;
 
     var ctaLink = '<p style="margin-top:16px;"><a href="' + CONFIG.cta.url +
@@ -212,12 +219,14 @@ ${P} .${ROOT}-msg-error{color:var(--fpc-primary);margin-top:8px}
         uitkomst = "geen invoer";
       } else if (!/^\d+(\.\d+)?$/.test(pcValue) && !CONFIG.specialCases.hasOwnProperty(pcValue)) {
         uitkomst = "ongeldige invoer";
+      } else if (optOut.has(pcValue)) {
+        uitkomst = "opt-out";
       } else if (CONFIG.specialCases[pcValue]) {
         uitkomst = "speciale voorwaarden";
       } else if (eligible.has(pcValue)) {
         uitkomst = "in aanmerking";
       } else {
-        uitkomst = "niet in aanmerking";
+        uitkomst = "vanaf juli";
       }
 
       var pc = esc(pcValue);
@@ -230,14 +239,16 @@ ${P} .${ROOT}-msg-error{color:var(--fpc-primary);margin-top:8px}
       } else if (uitkomst === "speciale voorwaarden") {
         html = '<div class="' + ROOT + '-note success"><p><strong>Ja, met een belangrijke opmerking!</strong></p>' +
           "<div>" + CONFIG.specialCases[pcValue] + "</div>" + juliBanner + ctaLink + "</div>";
-      } else if (uitkomst === "niet in aanmerking") {
-        html = '<div class="' + ROOT + '-note error">' +
-          "<p><strong>Nee, (nog) niet in aanmerking.</strong></p>" +
-          "<p>Jouw sector met PC-nummer <strong>" + pc + "</strong> staat momenteel niet op de lijst.</p>" +
-          '<p style="margin-top:12px;font-weight:bold;">' + CONFIG.alleSectorenNote + "</p>" +
-          '<p style="margin-top:8px;">Laat hieronder je e-mailadres achter, dan houden we je op de hoogte van de startdatum en voorwaarden.</p></div>';
+      } else if (uitkomst === "vanaf juli") {
+        html = '<div class="' + ROOT + '-note success">' +
+          "<p><strong>" + esc(CONFIG.nieuwJuliHeading) + "</strong></p>" +
+          "<p>" + CONFIG.nieuwJuliText.replace("{pc}", pc) + "</p>" +
+          ctaLink + "</div>";
         r.leadTitle.innerText = CONFIG.leadForm.nietTitle;
         r.leadDesc.innerHTML = esc(CONFIG.leadForm.nietDesc);
+      } else if (uitkomst === "opt-out") {
+        html = '<div class="' + ROOT + '-note error"><p><strong>' +
+          CONFIG.optOutText.replace("{pc}", pc) + "</strong></p></div>";
       } else if (uitkomst === "ongeldige invoer") {
         html = '<div class="' + ROOT + '-note error"><p><strong>Ongeldige invoer</strong></p><p>Voer een geldig paritair comité nummer in (bv: 302, 118.03).</p></div>';
       } else if (uitkomst === "geen invoer") {
@@ -245,7 +256,7 @@ ${P} .${ROOT}-msg-error{color:var(--fpc-primary);margin-top:8px}
       }
 
       r.pcResult.innerHTML = html;
-      r.lead.style.display = (uitkomst === "niet in aanmerking") ? "block" : "none";
+      r.lead.style.display = (uitkomst === "vanaf juli") ? "block" : "none";
 
       if (pcValue !== lastTrackedPCValue) {
         track(pcValue, uitkomst);
