@@ -8,8 +8,15 @@ overal ingesloten met een klein snippet. Eén keer aanpassen = overal bijgewerkt
 | Bestand | Tool | Mount-div |
 |---|---|---|
 | `flexi-job.js` | Flexi-Job check | `<div id="flexi-job-tool">` |
-| _(volgt)_ | Tool 2 | |
+| `inkomsten-limiet.js` | Hoeveel mag je bijverdienen? | `<div id="inkomsten-limiet-tool">` |
 | _(volgt)_ | Tool 3 | |
+
+Insluit-snippet voor tool 2:
+
+```html
+<div id="inkomsten-limiet-tool"></div>
+<script src="https://cdn.jsdelivr.net/gh/USER/nestor-tools@v1/inkomsten-limiet.js" defer></script>
+```
 
 ## Insluiten op een pagina (HubSpot of elke andere site)
 
