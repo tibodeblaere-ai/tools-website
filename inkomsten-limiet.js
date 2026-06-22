@@ -17,7 +17,7 @@
   var CONFIG = {
     mountId: "inkomsten-limiet-tool",
     title: "Hoeveel mag je bijverdienen?",
-    jaar: "2025", // verschijnt in "Jouw jaargrens (bruto) voor <jaar>"
+    jaar: "2026", // verschijnt in "Jouw jaargrens (bruto) voor <jaar>"
 
     colors: { primary: "#F73109", primaryHover: "#D92B07" },
 
@@ -81,17 +81,17 @@
     results: {
       pensioen_normaal:     { ja: "onbegrensd", nee: "onbegrensd" },
       overgangsuitkering:   { ja: "onbegrensd", nee: "onbegrensd" },
-      pensioen_geen_partner:{ ja: { werknemer: "15.175 EUR", zelfstandige: "12.140 EUR" },
-                              nee: { werknemer: "10.117 EUR", zelfstandige: "8.093 EUR" } },
+      pensioen_geen_partner:{ ja: { werknemer: "15.648 EUR", zelfstandige: "12.519 EUR" },
+                              nee: { werknemer: "10.432 EUR", zelfstandige: "8.346 EUR" } },
       pensioen_wel_partner: { ja: { werknemer: "35.333 EUR (+5.889 EUR per kind)", zelfstandige: "28.266 EUR (+4.711 EUR per kind)" },
                               nee: { werknemer: "23.555 EUR", zelfstandige: "18.844 EUR" } },
-      speciaal_stelsel:     { ja: { werknemer: "35.544 EUR", zelfstandige: "28.435 EUR" },
-                              nee: { werknemer: "29.221 EUR", zelfstandige: "23.377 EUR" } },
+      speciaal_stelsel:     { ja: { werknemer: "36.652 EUR", zelfstandige: "29.321 EUR" },
+                              nee: { werknemer: "30.132 EUR", zelfstandige: "24.105 EUR" } },
       gezinspensioen:       { ja: { werknemer: "35.544 EUR", zelfstandige: "28.435 EUR" },
                               nee: { werknemer: "35.544 EUR", zelfstandige: "28.435 EUR" } },
       flexijob_wettelijk:   { ja: "onbegrensd", nee: "onbegrensd" },
-      flexijob_vervroegd:   { ja: { werknemer: "7.876 EUR", zelfstandige: "N.v.t." },
-                              nee: { werknemer: "7.876 EUR", zelfstandige: "N.v.t." } }
+      flexijob_vervroegd:   { ja: { werknemer: "8.121 EUR", zelfstandige: "N.v.t." },
+                              nee: { werknemer: "8.121 EUR", zelfstandige: "N.v.t." } }
     }
   };
 
