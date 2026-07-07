@@ -1,740 +1,175 @@
-
 {
   "vacatures": [
-    {
-      "naam": "Dirk"
-    },
-    {
-      "naam": "Jan"
-    },
-    {
-      "naam": "Peter"
-    },
-    {
-      "naam": "Marianne"
-    },
-    {
-      "naam": "Gilbert"
-    },
-    {
-      "naam": "Fernand"
-    },
-    {
-      "naam": "Monique"
-    },
-    {
-      "naam": "Raymond"
-    },
-    {
-      "naam": "Georgette"
-    },
-    {
-      "naam": "Marcel"
-    },
-    {
-      "naam": "Simone"
-    },
-    {
-      "naam": "Roger"
-    },
-    {
-      "naam": "Lucien"
-    },
-    {
-      "naam": "Gaston"
-    },
-    {
-      "naam": "Wilfried"
-    },
-    {
-      "naam": "Luc"
-    },
-    {
-      "naam": "Marc"
-    },
-    {
-      "naam": "Patrick"
-    },
-    {
-      "naam": "Frank"
-    },
-    {
-      "naam": "Eric"
-    },
-    {
-      "naam": "Geert"
-    },
-    {
-      "naam": "Johan"
-    },
-    {
-      "naam": "Willy"
-    },
-    {
-      "naam": "Danny"
-    },
-    {
-      "naam": "Guy"
-    },
-    {
-      "naam": "Rita"
-    },
-    {
-      "naam": "Christiane"
-    },
-    {
-      "naam": "Annie"
-    },
-    {
-      "naam": "Martine"
-    },
-    {
-      "naam": "Liliane"
-    },
-    {
-      "naam": "Carine"
-    },
-    {
-      "naam": "Nadine"
-    },
-    {
-      "naam": "Christine"
-    },
-    {
-      "naam": "Veronique"
-    },
-    {
-      "naam": "Isabelle"
-    },
-    {
-      "naam": "Eddy"
-    },
-    {
-      "naam": "Freddy"
-    },
-    {
-      "naam": "Ronny"
-    },
-    {
-      "naam": "Rudy"
-    },
-    {
-      "naam": "Kris"
-    },
-    {
-      "naam": "Rik"
-    },
-    {
-      "naam": "Bart"
-    },
-    {
-      "naam": "Tom"
-    },
-    {
-      "naam": "Hendrik"
-    },
-    {
-      "naam": "Magda"
-    },
-    {
-      "naam": "Hilde"
-    },
-    {
-      "naam": "Linda"
-    },
-    {
-      "naam": "Greet"
-    },
-    {
-      "naam": "Katrien"
-    },
-    {
-      "naam": "Rony"
-    },
-    {
-      "naam": "Walter"
-    },
-    {
-      "naam": "Hugo"
-    },
-    {
-      "naam": "Leon"
-    },
-    {
-      "naam": "Norbert"
-    },
-    {
-      "naam": "Andre"
-    },
-    {
-      "naam": "Michel"
-    },
-    {
-      "naam": "Philippe"
-    },
-    {
-      "naam": "Alain"
-    },
-    {
-      "naam": "Bruno"
-    },
-    {
-      "naam": "Stefan"
-    },
-    {
-      "naam": "Werner"
-    },
-    {
-      "naam": "Kristof"
-    },
-    {
-      "naam": "Lieven"
-    },
-    {
-      "naam": "Stef"
-    },
-    {
-      "naam": "Nico"
-    },
-    {
-      "naam": "Kurt"
-    },
-    {
-      "naam": "Sven"
-    },
-    {
-      "naam": "Jonas"
-    },
-    {
-      "naam": "Wouter"
-    },
-    {
-      "naam": "Pieter"
-    },
-    {
-      "naam": "Simon"
-    },
-    {
-      "naam": "Thomas"
-    },
-    {
-      "naam": "Alexander"
-    },
-    {
-      "naam": "Timothy"
-    },
-    {
-      "naam": "Kevin"
-    },
-    {
-      "naam": "David"
-    },
-    {
-      "naam": "Michael"
-    },
-    {
-      "naam": "Nick"
-    },
-    {
-      "naam": "Stijn"
-    },
-    {
-      "naam": "Bram"
-    },
-    {
-      "naam": "Mathias"
-    },
-    {
-      "naam": "Tibo"
-    },
-    {
-      "naam": "Sander"
-    },
-    {
-      "naam": "Wout"
-    },
-    {
-      "naam": "Jarne"
-    },
-    {
-      "naam": "Dries"
-    },
-    {
-      "naam": "Axel"
-    },
-    {
-      "naam": "Cedric"
-    },
-    {
-      "naam": "Sebastiaan"
-    },
-    {
-      "naam": "Jeroen"
-    },
-    {
-      "naam": "Maarten"
-    },
-    {
-      "naam": "Niels"
-    },
-    {
-      "naam": "Arne"
-    },
-    {
-      "naam": "Hannes"
-    },
-    {
-      "naam": "Jens"
-    },
-    {
-      "naam": "Michiel"
-    },
-    {
-      "naam": "Tijs"
-    },
-    {
-      "naam": "Florian"
-    },
-    {
-      "naam": "Jasper"
-    },
-    {
-      "naam": "Laurens"
-    },
-    {
-      "naam": "Remi"
-    },
-    {
-      "naam": "Warre"
-    },
-    {
-      "naam": "Xander"
-    },
-    {
-      "naam": "Yannick"
-    },
-    {
-      "naam": "Wannes"
-    },
-    {
-      "naam": "Emile"
-    },
-    {
-      "naam": "Rene"
-    },
-    {
-      "naam": "Julien"
-    },
-    {
-      "naam": "Armand"
-    },
-    {
-      "naam": "Albert"
-    },
-    {
-      "naam": "Constant"
-    },
-    {
-      "naam": "Leopold"
-    },
-    {
-      "naam": "Gustaaf"
-    },
-    {
-      "naam": "Achiel"
-    },
-    {
-      "naam": "Cyriel"
-    },
-    {
-      "naam": "Alfons"
-    },
-    {
-      "naam": "Jozef"
-    },
-    {
-      "naam": "Louis"
-    },
-    {
-      "naam": "Eduard"
-    },
-    {
-      "naam": "Kamiel"
-    },
-    {
-      "naam": "Modest"
-    },
-    {
-      "naam": "Desire"
-    },
-    {
-      "naam": "Octaaf"
-    },
-    {
-      "naam": "Valere"
-    },
-    {
-      "naam": "Florent"
-    },
-    {
-      "naam": "Hilaire"
-    },
-    {
-      "naam": "Theophiel"
-    },
-    {
-      "naam": "Sylveer"
-    },
-    {
-      "naam": "Lea"
-    },
-    {
-      "naam": "Paula"
-    },
-    {
-      "naam": "Rosa"
-    },
-    {
-      "naam": "Maria"
-    },
-    {
-      "naam": "Anna"
-    },
-    {
-      "naam": "Elza"
-    },
-    {
-      "naam": "Nora"
-    },
-    {
-      "naam": "Irene"
-    },
-    {
-      "naam": "Bertha"
-    },
-    {
-      "naam": "Yvonne"
-    },
-    {
-      "naam": "Jeanne"
-    },
-    {
-      "naam": "Germaine"
-    },
-    {
-      "naam": "Celeste"
-    },
-    {
-      "naam": "Leonie"
-    },
-    {
-      "naam": "Godelieve"
-    },
-    {
-      "naam": "Henriette"
-    },
-    {
-      "naam": "Blanche"
-    },
-    {
-      "naam": "Nathalie"
-    },
-    {
-      "naam": "Sofie"
-    },
-    {
-      "naam": "Karen"
-    },
-    {
-      "naam": "Julie"
-    },
-    {
-      "naam": "Lies"
-    },
-    {
-      "naam": "Fien"
-    },
-    {
-      "naam": "Laura"
-    },
-    {
-      "naam": "Yasmine"
-    },
-    {
-      "naam": "Sara"
-    },
-    {
-      "naam": "An"
-    },
-    {
-      "naam": "Elien"
-    },
-    {
-      "naam": "Lore"
-    },
-    {
-      "naam": "Tinne"
-    },
-    {
-      "naam": "Jolien"
-    },
-    {
-      "naam": "Amber"
-    },
-    {
-      "naam": "Eline"
-    },
-    {
-      "naam": "Silke"
-    },
-    {
-      "naam": "Nele"
-    },
-    {
-      "naam": "Lien"
-    },
-    {
-      "naam": "Annelies"
-    },
-    {
-      "naam": "Lieselot"
-    },
-    {
-      "naam": "Lana"
-    },
-    {
-      "naam": "Tine"
-    },
-    {
-      "naam": "Hanne"
-    },
-    {
-      "naam": "Joke"
-    },
-    {
-      "naam": "Inge"
-    },
-    {
-      "naam": "Veerle"
-    },
-    {
-      "naam": "Heidi"
-    },
-    {
-      "naam": "Wendy"
-    },
-    {
-      "naam": "Tanja"
-    },
-    {
-      "naam": "Els"
-    },
-    {
-      "naam": "Anke"
-    },
-    {
-      "naam": "Liesbet"
-    },
-    {
-      "naam": "Petra"
-    },
-    {
-      "naam": "Sabine"
-    },
-    {
-      "naam": "Sandra"
-    },
-    {
-      "naam": "Cindy"
-    },
-    {
-      "naam": "Deborah"
-    },
-    {
-      "naam": "Valerie"
-    },
-    {
-      "naam": "Stephanie"
-    },
-    {
-      "naam": "Virginie"
-    },
-    {
-      "naam": "Aurelie"
-    },
-    {
-      "naam": "Nathalie"
-    },
-    {
-      "naam": "Katrien"
-    },
-    {
-      "naam": "Annick"
-    },
-    {
-      "naam": "Brigitte"
-    },
-    {
-      "naam": "Claudine"
-    },
-    {
-      "naam": "Dominique"
-    },
-    {
-      "naam": "Eliane"
-    },
-    {
-      "naam": "Francoise"
-    },
-    {
-      "naam": "Ghislaine"
-    },
-    {
-      "naam": "Jacqueline"
-    },
-    {
-      "naam": "Josiane"
-    },
-    {
-      "naam": "Michele"
-    },
-    {
-      "naam": "Pascale"
-    },
-    {
-      "naam": "Regine"
-    },
-    {
-      "naam": "Sylvie"
-    },
-    {
-      "naam": "Danielle"
-    },
-    {
-      "naam": "Viviane"
-    },
-    {
-      "naam": "Chantal"
-    },
-    {
-      "naam": "Beatrice"
-    },
-    {
-      "naam": "Colette"
-    },
-    {
-      "naam": "Denise"
-    },
-    {
-      "naam": "Evelyne"
-    },
-    {
-      "naam": "Fabienne"
-    },
-    {
-      "naam": "Ginette"
-    },
-    {
-      "naam": "Helene"
-    },
-    {
-      "naam": "Mireille"
-    },
-    {
-      "naam": "Odette"
-    },
-    {
-      "naam": "Solange"
-    },
-    {
-      "naam": "Therese"
-    },
-    {
-      "naam": "Yvette"
-    },
-    {
-      "naam": "Lutgarde"
-    },
-    {
-      "naam": "Greta"
-    },
-    {
-      "naam": "Mia"
-    },
-    {
-      "naam": "Ria"
-    },
-    {
-      "naam": "Trees"
-    },
-    {
-      "naam": "Lut"
-    },
-    {
-      "naam": "Roos"
-    },
-    {
-      "naam": "Lieve"
-    },
-    {
-      "naam": "Sonja"
-    },
-    {
-      "naam": "Anita"
-    },
-    {
-      "naam": "Greta"
-    },
-    {
-      "naam": "Wiske"
-    },
-    {
-      "naam": "Leen"
-    },
-    {
-      "naam": "Lotte"
-    },
-    {
-      "naam": "Emma"
-    },
-    {
-      "naam": "Fleur"
-    },
-    {
-      "naam": "Hailey"
-    },
-    {
-      "naam": "Remi"
-    },
-    {
-      "naam": "Pieter-Jan"
-    },
-    {
-      "naam": "Jean-Marie"
-    },
-    {
-      "naam": "Luk"
-    },
-    {
-      "naam": "Pol"
-    },
-    {
-      "naam": "Guido"
-    },
-    {
-      "naam": "Raoul"
-    },
-    {
-      "naam": "Etienne"
-    },
-    {
-      "naam": "Leon"
-    },
-    {
-      "naam": "Serge"
-    },
-    {
-      "naam": "Thierry"
-    }
+    { "naam": "Dirk" },
+    { "naam": "Jan" },
+    { "naam": "Peter" },
+    { "naam": "Marianne" },
+    { "naam": "Gilbert" },
+    { "naam": "Fernand" },
+    { "naam": "Monique" },
+    { "naam": "Raymond" },
+    { "naam": "Georgette" },
+    { "naam": "Marcel" },
+    { "naam": "Simone" },
+    { "naam": "Roger" },
+    { "naam": "Lucien" },
+    { "naam": "Gaston" },
+    { "naam": "Wilfried" },
+    { "naam": "Luc" },
+    { "naam": "Marc" },
+    { "naam": "Patrick" },
+    { "naam": "Frank" },
+    { "naam": "Eric" },
+    { "naam": "Geert" },
+    { "naam": "Johan" },
+    { "naam": "Willy" },
+    { "naam": "Danny" },
+    { "naam": "Guy" },
+    { "naam": "Rita" },
+    { "naam": "Christiane" },
+    { "naam": "Annie" },
+    { "naam": "Martine" },
+    { "naam": "Liliane" },
+    { "naam": "Carine" },
+    { "naam": "Nadine" },
+    { "naam": "Christine" },
+    { "naam": "Veronique" },
+    { "naam": "Isabelle" },
+    { "naam": "Eddy" },
+    { "naam": "Freddy" },
+    { "naam": "Ronny" },
+    { "naam": "Rudy" },
+    { "naam": "Kris" },
+    { "naam": "Rik" },
+    { "naam": "Bart" },
+    { "naam": "Tom" },
+    { "naam": "Hendrik" },
+    { "naam": "Magda" },
+    { "naam": "Hilde" },
+    { "naam": "Linda" },
+    { "naam": "Greet" },
+    { "naam": "Katrien" },
+    { "naam": "Walter" },
+    { "naam": "Hugo" },
+    { "naam": "Leon" },
+    { "naam": "Norbert" },
+    { "naam": "Andre" },
+    { "naam": "Michel" },
+    { "naam": "Philippe" },
+    { "naam": "Alain" },
+    { "naam": "Bruno" },
+    { "naam": "Werner" },
+    { "naam": "Kristof" },
+    { "naam": "Lieven" },
+    { "naam": "Stef" },
+    { "naam": "Emile" },
+    { "naam": "Rene" },
+    { "naam": "Julien" },
+    { "naam": "Armand" },
+    { "naam": "Albert" },
+    { "naam": "Constant" },
+    { "naam": "Leopold" },
+    { "naam": "Gustaaf" },
+    { "naam": "Achiel" },
+    { "naam": "Cyriel" },
+    { "naam": "Alfons" },
+    { "naam": "Jozef" },
+    { "naam": "Louis" },
+    { "naam": "Eduard" },
+    { "naam": "Kamiel" },
+    { "naam": "Modest" },
+    { "naam": "Desire" },
+    { "naam": "Octaaf" },
+    { "naam": "Valere" },
+    { "naam": "Florent" },
+    { "naam": "Hilaire" },
+    { "naam": "Sylveer" },
+    { "naam": "Lea" },
+    { "naam": "Paula" },
+    { "naam": "Rosa" },
+    { "naam": "Maria" },
+    { "naam": "Anna" },
+    { "naam": "Elza" },
+    { "naam": "Nora" },
+    { "naam": "Irene" },
+    { "naam": "Bertha" },
+    { "naam": "Yvonne" },
+    { "naam": "Jeanne" },
+    { "naam": "Germaine" },
+    { "naam": "Celeste" },
+    { "naam": "Leonie" },
+    { "naam": "Godelieve" },
+    { "naam": "Henriette" },
+    { "naam": "Blanche" },
+    { "naam": "Nathalie" },
+    { "naam": "Karen" },
+    { "naam": "Lies" },
+    { "naam": "Veerle" },
+    { "naam": "Heidi" },
+    { "naam": "Wendy" },
+    { "naam": "Tanja" },
+    { "naam": "Els" },
+    { "naam": "Petra" },
+    { "naam": "Sabine" },
+    { "naam": "Sandra" },
+    { "naam": "Annick" },
+    { "naam": "Brigitte" },
+    { "naam": "Claudine" },
+    { "naam": "Dominique" },
+    { "naam": "Eliane" },
+    { "naam": "Francoise" },
+    { "naam": "Ghislaine" },
+    { "naam": "Jacqueline" },
+    { "naam": "Josiane" },
+    { "naam": "Michele" },
+    { "naam": "Pascale" },
+    { "naam": "Regine" },
+    { "naam": "Sylvie" },
+    { "naam": "Danielle" },
+    { "naam": "Viviane" },
+    { "naam": "Chantal" },
+    { "naam": "Beatrice" },
+    { "naam": "Colette" },
+    { "naam": "Denise" },
+    { "naam": "Evelyne" },
+    { "naam": "Fabienne" },
+    { "naam": "Ginette" },
+    { "naam": "Helene" },
+    { "naam": "Mireille" },
+    { "naam": "Odette" },
+    { "naam": "Solange" },
+    { "naam": "Therese" },
+    { "naam": "Yvette" },
+    { "naam": "Lutgarde" },
+    { "naam": "Greta" },
+    { "naam": "Mia" },
+    { "naam": "Ria" },
+    { "naam": "Trees" },
+    { "naam": "Lut" },
+    { "naam": "Roos" },
+    { "naam": "Lieve" },
+    { "naam": "Sonja" },
+    { "naam": "Anita" },
+    { "naam": "Wiske" },
+    { "naam": "Leen" },
+    { "naam": "Pieter-Jan" },
+    { "naam": "Jean-Marie" },
+    { "naam": "Luk" },
+    { "naam": "Pol" },
+    { "naam": "Guido" },
+    { "naam": "Raoul" },
+    { "naam": "Etienne" },
+    { "naam": "Serge" },
+    { "naam": "Thierry" },
+    { "naam": "Stefaan" },
+    { "naam": "Reinilde" },
+    { "naam": "Ingrid" },
+    { "naam": "Marleen" },
+    { "naam": "Annemie" },
+    { "naam": "Inge" },
+    { "naam": "Joke" },
+    { "naam": "Magalie" },
+    { "naam": "Christel" },
+    { "naam": "Ilse" }
   ]
 }
