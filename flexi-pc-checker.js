@@ -43,10 +43,15 @@
     optOut: ["144"],
     optOutText: "Nee, jouw sector (PC {pc}) heeft een geldige opt-out en komt niet in aanmerking voor flexi-jobs — ook niet na 1 juli 2026.",
 
-    // Catch-all: elke andere geldige sector krijgt groen licht vanaf 1 juli 2026.
-    // Hierdoor blijft het antwoord ook na 1 juli correct en hoeft de tool niet meer bijgewerkt te worden.
-    nieuwJuliHeading: "Ja! Vanaf 1 juli 2026 komt jouw sector in aanmerking.",
-    nieuwJuliText: "Vanaf <strong>1 juli 2026</strong> wordt flexi-jobben mogelijk in alle sectoren, behalve die met een geldige opt-out. Jouw sector (PC {pc}) hoort daarbij. (Onder voorbehoud)",
+    // Sectoren waarvoor een GEDEELTELIJKE opt-out is aangevraagd die ten vroegste vanaf 1 oktober 2026
+    // van kracht kan worden (bv. bouw PC 124). Flexi-jobben kan nu, maar met een waarschuwing.
+    gedeeltelijkOptOutOktober: ["124"],
+    gedeeltelijkOptOutHeading: "Ja, sinds 1 juli 2026 kan dit — maar let op.",
+    gedeeltelijkOptOutText: "Sinds <strong>1 juli 2026</strong> is flexi-jobben mogelijk in jouw sector (PC {pc}). Voor deze sector is echter een <strong>gedeeltelijke uitsluiting</strong> aangevraagd, die ten vroegste <strong>vanaf 1 oktober 2026</strong> van kracht kan worden. Dit is nog niet officieel bevestigd. (Onder voorbehoud)",
+
+    // Catch-all: elke andere geldige sector komt sinds 1 juli 2026 in aanmerking.
+    nieuwJuliHeading: "Ja! Sinds 1 juli 2026 komt jouw sector in aanmerking.",
+    nieuwJuliText: "Sinds <strong>1 juli 2026</strong> is flexi-jobben mogelijk in alle sectoren, behalve die met een geldige opt-out. Jouw sector (PC {pc}) hoort daarbij. (Onder voorbehoud)",
 
     // Goedgekeurde paritaire comités (PC's)
     eligiblePCs: [
@@ -198,6 +203,7 @@ ${P} .${ROOT}-msg-error{color:var(--fpc-primary);margin-top:8px}
     var eligible = new Set(CONFIG.eligiblePCs);
     var vanafJuli = new Set(CONFIG.vanafJuli2026);
     var optOut = new Set(CONFIG.optOut);
+    var gedeeltelijkOptOut = new Set(CONFIG.gedeeltelijkOptOutOktober);
     var lastTrackedPCValue = null;
 
     var ctaLink = '<p style="margin-top:16px;"><a href="' + CONFIG.cta.url +
@@ -221,6 +227,8 @@ ${P} .${ROOT}-msg-error{color:var(--fpc-primary);margin-top:8px}
         uitkomst = "ongeldige invoer";
       } else if (optOut.has(pcValue)) {
         uitkomst = "opt-out";
+      } else if (gedeeltelijkOptOut.has(pcValue)) {
+        uitkomst = "gedeeltelijke opt-out";
       } else if (CONFIG.specialCases[pcValue]) {
         uitkomst = "speciale voorwaarden";
       } else if (eligible.has(pcValue)) {
@@ -246,6 +254,13 @@ ${P} .${ROOT}-msg-error{color:var(--fpc-primary);margin-top:8px}
           ctaLink + "</div>";
         r.leadTitle.innerText = CONFIG.leadForm.nietTitle;
         r.leadDesc.innerHTML = esc(CONFIG.leadForm.nietDesc);
+      } else if (uitkomst === "gedeeltelijke opt-out") {
+        html = '<div class="' + ROOT + '-note info">' +
+          "<p><strong>" + esc(CONFIG.gedeeltelijkOptOutHeading) + "</strong></p>" +
+          "<p>" + CONFIG.gedeeltelijkOptOutText.replace("{pc}", pc) + "</p>" +
+          ctaLink + "</div>";
+        r.leadTitle.innerText = CONFIG.leadForm.defaultTitle;
+        r.leadDesc.innerHTML = esc(CONFIG.leadForm.defaultDesc);
       } else if (uitkomst === "opt-out") {
         html = '<div class="' + ROOT + '-note error"><p><strong>' +
           CONFIG.optOutText.replace("{pc}", pc) + "</strong></p></div>";
@@ -256,7 +271,7 @@ ${P} .${ROOT}-msg-error{color:var(--fpc-primary);margin-top:8px}
       }
 
       r.pcResult.innerHTML = html;
-      r.lead.style.display = (uitkomst === "vanaf juli") ? "block" : "none";
+      r.lead.style.display = (uitkomst === "vanaf juli" || uitkomst === "gedeeltelijke opt-out") ? "block" : "none";
 
       if (pcValue !== lastTrackedPCValue) {
         track(pcValue, uitkomst);
