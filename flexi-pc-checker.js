@@ -3,7 +3,7 @@
  * Eén zelfstandig bestand. Sluit overal in met:
  *
  *   <div id="flexi-checker-container-leadgen"></div>
- *   <script src="https://cdn.jsdelivr.net/gh/tibodeblaere-ai/tools-website@v1/flexi-pc-checker.js" defer></script>
+ *   <script src="https://cdn.jsdelivr.net/gh/tibodeblaere-ai/tools-website@main/flexi-pc-checker.js" defer></script>
  *
  * Inhoud aanpassen? Pas alleen het CONFIG-blok hieronder aan.
  * De logica eronder hoef je normaal niet aan te raken.
