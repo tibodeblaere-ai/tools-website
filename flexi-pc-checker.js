@@ -34,51 +34,43 @@
 
     disclaimer: "<strong>Disclaimer:</strong> Deze tool is louter informatief. Er kunnen geen rechten aan worden ontleend. Raadpleeg altijd de officiële bronnen voor de meest actuele en correcte informatie.",
 
-    // Caveat-banner bij REEDS toegelaten sectoren die nog een 1-juli-voorwaarde hebben (bv. zorgberoepen, PC 330).
-    vanafJuli2026: ["330"],
-    vanafJuliNote: "⏳ <strong>Let op:</strong> voor (zorg)beroepen in deze sector wordt flexi-jobben pas mogelijk <strong>vanaf 1 juli 2026</strong>.",
+    // Bron voor de lijsten hieronder: Securex Lex4You, "Flexi-jobs: mag ik ermee aan de slag in mijn sector?" (24/09/2026),
+    // op basis van de wet van 28/06/2026 en het KB van 30/08/2026.
+    // Principe: sinds 1 juli 2026 zijn flexi-jobs mogelijk in elke sector, behalve waar een opt-out geldt.
 
-    // Sectoren met een geldige OPT-OUT: komen ook NA 1 juli 2026 niet in aanmerking (bv. landbouw PC 144).
-    // Vul hier aan zodra een sector officieel een opt-out neemt.
+    // Sectoren met een VOLLEDIGE opt-out: de RSZ aanvaardt er geen flexi-jobs.
     optOut: ["144"],
-    optOutText: "Nee, jouw sector (PC {pc}) heeft een geldige opt-out en komt niet in aanmerking voor flexi-jobs — ook niet na 1 juli 2026.",
+    optOutText: "Nee, jouw sector (PC {pc}) heeft een geldige opt-out en komt niet in aanmerking voor flexi-jobs.",
 
-    // Sectoren waarvoor een GEDEELTELIJKE opt-out is aangevraagd die ten vroegste vanaf 1 oktober 2026
-    // van kracht kan worden (bv. bouw PC 124). Flexi-jobben kan nu, maar met een waarschuwing.
-    gedeeltelijkOptOutOktober: ["124"],
-    gedeeltelijkOptOutHeading: "Ja, sinds 1 juli 2026 kan dit — maar let op.",
-    gedeeltelijkOptOutText: "Sinds <strong>1 juli 2026</strong> is flexi-jobben mogelijk in jouw sector (PC {pc}). Voor deze sector is echter een <strong>gedeeltelijke uitsluiting</strong> aangevraagd, die ten vroegste <strong>vanaf 1 oktober 2026</strong> van kracht kan worden. Dit is nog niet officieel bevestigd. (Onder voorbehoud)",
+    // Sectoren met een GEDEELTELIJKE opt-out die de RSZ toepast (key = PC). Flexi-jobs kunnen er enkel binnen de grenzen hieronder.
+    beperkteOptOutHeading: "Gedeeltelijk: in jouw sector gelden beperkingen.",
+    beperkteOptOut: {
+      "121": "Sinds <strong>1 oktober 2026</strong> zijn flexi-jobs in de schoonmaaksector (PC 121) enkel nog mogelijk voor <strong>gepensioneerden</strong>.",
+      "143": "In de zeevisserij (PC 143) zijn flexi-jobs uitgesloten voor het <strong>varend personeel</strong>. Voor andere functies kan het wel.",
+      "145": "In de tuinbouw (PC 145) zijn flexi-jobs uitgesloten, <strong>met uitzondering van de aanleg en het onderhoud van parken en tuinen</strong>.",
+      "320": "Bij begrafenisondernemingen (PC 320) mogen enkel de taken van een <strong>gelegenheidsarbeider</strong> door een flexi-jobber worden uitgevoerd.",
+      "323": "In het beheer van gebouwen (PC 323) geldt de uitsluiting enkel voor <strong>dienstboden</strong>. Voor andere functies kan het wel.",
+      "331": "In de Vlaamse welzijns- en gezondheidssector (PC 331) kan het, maar in de <strong>kinderopvang</strong> mag maximaal <strong>20%</strong> van het totaal aantal gewerkte uren met flexi-jobs gepresteerd worden.",
+      "322.01": "Voor dienstencheque-activiteiten (PC 322.01) is een flexi-job toegelaten tot <strong>drie maanden na de eerste Dimona</strong> bij de werkgever. Daarna is een contract van onbepaalde duur verplicht, waardoor een flexi-job in de praktijk niet langer kan."
+    },
+
+    // Sectoren zonder RSZ-opt-out, maar waar sectorale afspraken (cao) beperkingen kunnen opleggen (bv. bouw PC 124).
+    sectoraleBeperking: ["124"],
+    sectoraleBeperkingHeading: "Ja, sinds 1 juli 2026 kan dit — maar let op.",
+    sectoraleBeperkingText: "Sinds <strong>1 juli 2026</strong> is flexi-jobben mogelijk in jouw sector (PC {pc}). De sector vroeg wel een <strong>gedeeltelijke uitsluiting</strong> aan, maar die staat niet op de lijst van opt-outs die de RSZ toepast. Sectorale afspraken (cao) kunnen wel beperkingen opleggen. Check dit dus goed. (Onder voorbehoud)",
 
     // Catch-all: elke andere geldige sector komt sinds 1 juli 2026 in aanmerking.
     nieuwJuliHeading: "Ja! Sinds 1 juli 2026 komt jouw sector in aanmerking.",
     nieuwJuliText: "Sinds <strong>1 juli 2026</strong> is flexi-jobben mogelijk in alle sectoren, behalve die met een geldige opt-out. Jouw sector (PC {pc}) hoort daarbij. (Onder voorbehoud)",
 
-    // Goedgekeurde paritaire comités (PC's)
-    eligiblePCs: [
-      "302", "201", "118.03", "312", "314", "330", "223", "303.03", "304", "331",
-      "140.01", "112", "118", "118.07", "118.08", "118.09", "118.10", "118.11",
-      "118.12", "118.14", "118.21", "118.22", "200", "320", "323", "140.05", "139"
-    ],
+    // Wettelijke beperkingen die in ELKE sector gelden. Wordt getoond bij elk positief antwoord.
+    wettelijkeBeperkingenNote: "ℹ️ In elke sector wettelijk uitgesloten: artistieke, artistiek-technische en artistiek-ondersteunende functies, en sekswerk.",
 
-    // Sectoren met bijzondere voorwaarden (key = PC of trefwoord).
+    // Sectoren met een extra positieve opmerking (key = PC of trefwoord).
     specialCases: {
-      "118": "Ja, de voedingsindustrie (PC 118) komt in grote mate in aanmerking. Hier zijn de belangrijkste subsectoren die in aanmerking komen:" +
-        '<ul style="margin-top:8px;list-style-position:inside;list-style-type:disc;">' +
-          "<li><strong>PC 118.03:</strong> Bakkerijen en banketbakkerijen</li>" +
-          "<li><strong>PC 118.07:</strong> Brouwerijen en mouterijen</li>" +
-          "<li><strong>PC 118.08:</strong> Drankennijverheid</li>" +
-          "<li><strong>PC 118.09:</strong> Groentenijverheid</li>" +
-          "<li><strong>PC 118.11:</strong> Vleesnijverheid</li>" +
-          "<li><strong>PC 118.12:</strong> Zuivelproducten</li>" +
-          "<li><strong>PC 118.21:</strong> Aardappelverwerkende nijverheid</li>" +
-        "</ul>" +
-        '<p style="margin-top:8px;">Als uw specifieke sub-PC hierbij staat, komt u in aanmerking.</p>',
-      "330": "Ja, de zorgsector (PC 330) komt in aanmerking, maar enkel voor publieke instellingen met specifieke NACE-codes. Controleer dit zorgvuldig.",
-      "331": "Ja, kinderopvang (PC 331) komt in aanmerking, op voorwaarde dat de hoofdactiviteit kinderopvang is (NACE 88.91).",
-      "200": "Ja, PC 200 komt in aanmerking voor rijscholen en opleidingscentra met NACE-code 85.531.",
-      "320": "Ja, voor begrafenisondernemers (PC 320) is dit enkel mogelijk voor gelegenheidsmedewerkers.",
-      "onderwijs": "Ja, de onderwijssector komt in aanmerking, zowel het officiële als het gesubsidieerde vrije onderwijs. Dit is niet gebonden aan een specifiek PC-nummer.",
-      "events": "Ja, de eventsector komt in aanmerking. Dit is niet gebonden aan één specifiek PC, maar aan specifieke NACE-codes voor evenementenorganisatie. Controleer je NACE-code."
+      "132": "De opt-out voor technische landbouwwerken (PC 132) liep tot 30 juni 2026 en werd <strong>niet verlengd</strong>. Sinds 1 juli 2026 zijn flexi-jobs er dus toegelaten.",
+      "onderwijs": "De onderwijssector komt in aanmerking, zowel het officiële als het gesubsidieerde vrije onderwijs. Dit is niet gebonden aan een specifiek PC-nummer.",
+      "events": "De eventsector komt in aanmerking. Dit is niet gebonden aan één specifiek PC."
     },
 
     leadForm: {
@@ -200,10 +192,8 @@ ${P} .${ROOT}-msg-error{color:var(--fpc-primary);margin-top:8px}
 
   function run(mount) {
     var r = build(mount);
-    var eligible = new Set(CONFIG.eligiblePCs);
-    var vanafJuli = new Set(CONFIG.vanafJuli2026);
     var optOut = new Set(CONFIG.optOut);
-    var gedeeltelijkOptOut = new Set(CONFIG.gedeeltelijkOptOutOktober);
+    var sectoraleBeperking = new Set(CONFIG.sectoraleBeperking);
     var lastTrackedPCValue = null;
 
     var ctaLink = '<p style="margin-top:16px;"><a href="' + CONFIG.cta.url +
@@ -227,38 +217,41 @@ ${P} .${ROOT}-msg-error{color:var(--fpc-primary);margin-top:8px}
         uitkomst = "ongeldige invoer";
       } else if (optOut.has(pcValue)) {
         uitkomst = "opt-out";
-      } else if (gedeeltelijkOptOut.has(pcValue)) {
+      } else if (CONFIG.beperkteOptOut.hasOwnProperty(pcValue)) {
         uitkomst = "gedeeltelijke opt-out";
-      } else if (CONFIG.specialCases[pcValue]) {
+      } else if (sectoraleBeperking.has(pcValue)) {
+        uitkomst = "sectorale beperking";
+      } else if (CONFIG.specialCases.hasOwnProperty(pcValue)) {
         uitkomst = "speciale voorwaarden";
-      } else if (eligible.has(pcValue)) {
-        uitkomst = "in aanmerking";
       } else {
         uitkomst = "vanaf juli";
       }
 
       var pc = esc(pcValue);
-      var juliBanner = vanafJuli.has(pcValue) ? "<p>" + CONFIG.vanafJuliNote + "</p>" : "";
+      var wettelijk = '<p style="font-size:.9em;">' + CONFIG.wettelijkeBeperkingenNote + "</p>";
 
-      if (uitkomst === "in aanmerking") {
+      if (uitkomst === "speciale voorwaarden") {
         html = '<div class="' + ROOT + '-note success"><p><strong>Ja, je komt in aanmerking!</strong></p>' +
-          "<p>Jouw sector met PC-nummer <strong>" + pc + "</strong> staat op de lijst van toegelaten sectoren voor flexi-jobs.</p>" +
-          juliBanner + ctaLink + "</div>";
-      } else if (uitkomst === "speciale voorwaarden") {
-        html = '<div class="' + ROOT + '-note success"><p><strong>Ja, met een belangrijke opmerking!</strong></p>' +
-          "<div>" + CONFIG.specialCases[pcValue] + "</div>" + juliBanner + ctaLink + "</div>";
+          "<p>" + CONFIG.specialCases[pcValue] + "</p>" + wettelijk + ctaLink + "</div>";
       } else if (uitkomst === "vanaf juli") {
         html = '<div class="' + ROOT + '-note success">' +
           "<p><strong>" + esc(CONFIG.nieuwJuliHeading) + "</strong></p>" +
           "<p>" + CONFIG.nieuwJuliText.replace("{pc}", pc) + "</p>" +
-          ctaLink + "</div>";
+          wettelijk + ctaLink + "</div>";
         r.leadTitle.innerText = CONFIG.leadForm.nietTitle;
         r.leadDesc.innerHTML = esc(CONFIG.leadForm.nietDesc);
       } else if (uitkomst === "gedeeltelijke opt-out") {
         html = '<div class="' + ROOT + '-note info">' +
-          "<p><strong>" + esc(CONFIG.gedeeltelijkOptOutHeading) + "</strong></p>" +
-          "<p>" + CONFIG.gedeeltelijkOptOutText.replace("{pc}", pc) + "</p>" +
-          ctaLink + "</div>";
+          "<p><strong>" + esc(CONFIG.beperkteOptOutHeading) + "</strong></p>" +
+          "<p>" + CONFIG.beperkteOptOut[pcValue] + "</p>" +
+          wettelijk + ctaLink + "</div>";
+        r.leadTitle.innerText = CONFIG.leadForm.defaultTitle;
+        r.leadDesc.innerHTML = esc(CONFIG.leadForm.defaultDesc);
+      } else if (uitkomst === "sectorale beperking") {
+        html = '<div class="' + ROOT + '-note info">' +
+          "<p><strong>" + esc(CONFIG.sectoraleBeperkingHeading) + "</strong></p>" +
+          "<p>" + CONFIG.sectoraleBeperkingText.replace("{pc}", pc) + "</p>" +
+          wettelijk + ctaLink + "</div>";
         r.leadTitle.innerText = CONFIG.leadForm.defaultTitle;
         r.leadDesc.innerHTML = esc(CONFIG.leadForm.defaultDesc);
       } else if (uitkomst === "opt-out") {
@@ -271,7 +264,7 @@ ${P} .${ROOT}-msg-error{color:var(--fpc-primary);margin-top:8px}
       }
 
       r.pcResult.innerHTML = html;
-      r.lead.style.display = (uitkomst === "vanaf juli" || uitkomst === "gedeeltelijke opt-out") ? "block" : "none";
+      r.lead.style.display = (uitkomst === "vanaf juli" || uitkomst === "gedeeltelijke opt-out" || uitkomst === "sectorale beperking") ? "block" : "none";
 
       if (pcValue !== lastTrackedPCValue) {
         track(pcValue, uitkomst);
