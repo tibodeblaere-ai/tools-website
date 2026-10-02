@@ -25,8 +25,10 @@
       pageName: "Rekentool werkgeverskost flexi-job"
     },
 
-    // Berekening: totaal = brutoloon + RSZ + vakantiegeld (elk als % van het brutoloon).
-    rszPct: 0.25,
+    // Berekening: vakantiegeld = % van het brutoloon; RSZ = bijzondere werkgeversbijdrage flexi-jobs (28%)
+    // op brutoloon + vakantiegeld. Totaal = brutoloon + vakantiegeld + RSZ.
+    rszPct: 0.28,
+    rszOpVakantiegeld: true,
     vakantiegeldPct: 0.0767,
     defaultUurloon: 12.29,
     defaultUren: 20,
@@ -186,7 +188,8 @@ ${P}${ROOT}-foot{color:#b4b2a9;font-size:12px;line-height:1.4;margin:14px 0 0}`;
     function num(v) { var n = parseFloat(String(v).replace(",", ".")); return isNaN(n) || n < 0 ? 0 : n; }
 
     function calc() {
-      var b = num(ul.value) * num(ur.value), rsz = b * CONFIG.rszPct, vak = b * CONFIG.vakantiegeldPct;
+      var b = num(ul.value) * num(ur.value), vak = b * CONFIG.vakantiegeldPct;
+      var rsz = (CONFIG.rszOpVakantiegeld ? b + vak : b) * CONFIG.rszPct;
       q("bruto").textContent = f.format(b);
       q("rsz").textContent = f.format(rsz);
       q("vak").textContent = f.format(vak);
