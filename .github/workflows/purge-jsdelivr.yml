@@ -2,14 +2,21 @@ name: Purge jsDelivr cache
 
 # Na elke push naar main de jsDelivr-cache legen, zodat de embeds
 # (…/tools-website@main/…) meteen de nieuwe versie laden.
+# jsDelivr beperkt hoe vaak je hetzelfde bestand mag purgen ("throttled").
+# In dat geval wacht deze workflow tot het weer mag en probeert opnieuw.
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+concurrency:
+  group: purge-jsdelivr
+  cancel-in-progress: false
+
 jobs:
   purge:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,6 +29,16 @@ jobs:
             files=$(git diff --name-only HEAD~1 HEAD -- '*.js' '*.json' '*.css' '*.html')
           fi
           for f in $files; do
-            echo "Purge $f"
-            curl -fsS "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/$f" > /dev/null || echo "::warning::Purge mislukt voor $f"
+            for poging in 1 2 3; do
+              res=$(curl -fsS "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/$f") || { echo "::warning::Purge mislukt voor $f"; break; }
+              if echo "$res" | jq -e '.paths[] | select(.throttled == true)' >/dev/null; then
+                wacht=$(echo "$res" | jq '[.paths[].throttlingReset] | max')
+                wacht=$(( wacht > 1500 ? 1500 : wacht + 10 ))
+                echo "::notice::$f is throttled, opnieuw over ${wacht}s (poging $poging)"
+                sleep "$wacht"
+              else
+                echo "Purged $f"
+                break
+              fi
+            done
           done
