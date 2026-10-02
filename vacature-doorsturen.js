@@ -22,7 +22,7 @@
     // Het formulier moet de velden hieronder (fieldNames) bevatten, anders weigert HubSpot de inzending.
     hubspot: {
       portalId: "7551812",
-      formGuid: "PLAK_HIER_FORM_GUID",
+      formGuid: "3df4559c-5ce5-4835-bd46-195983326f2d",
       region: "eu1",
       pageName: "Stuur je vacature door"
     },
