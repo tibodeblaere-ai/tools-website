@@ -28,7 +28,7 @@
       portalId: "7551812",
       formId: "3f04e1ec-065f-4adc-a6b4-372fef4a2f1d",
       region: "eu1",
-      hideFields: [], // velden van het formulier die je in deze tool niet wil tonen
+      hideFields: ["btw_nummer"], // velden van het formulier die je in deze tool niet wil tonen
       // Teksten die we over die van HubSpot heen zetten (key = interne veldnaam). Enkel de zichtbare tekst
       // verandert; het veld zelf blijft hetzelfde, dus antwoorden komen in de juiste eigenschap terecht.
       labels: {
@@ -36,7 +36,6 @@
         lastname: "Achternaam",
         email: "E-mail",
         company: "Naam onderneming",
-        btw_nummer: "BTW-nummer",
         phone: "Telefoonnummer"
       },
       submitText: "Verstuur mijn aanvraag",
