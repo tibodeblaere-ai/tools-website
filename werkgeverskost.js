@@ -85,7 +85,11 @@
     medewerkers: { label: "Aantal medewerkers", min: 1, max: 20, start: 1, maxLabel: "20+" },
     uren: { label: "Aantal uur per week per medewerker", min: 1, max: 38, start: 20 },
 
+    nextLabel: "Ontvang mijn berekening",
+    missingText: "Vul nog in: ",
+    missingNames: { uurloon: "het bruto-uurloon", statuut: "het statuut", dienst: "wat je nodig hebt", niveau: "het type functie" },
     contactTitle: "Waar mogen we de berekening naartoe sturen?",
+    backLabel: "Wijzig",
     thanksText: "Bedankt! We bezorgen je de volledige berekening zo snel mogelijk per e-mail.",
     loadError: "Het formulier kon niet geladen worden. Herlaad de pagina en probeer opnieuw.",
 
@@ -144,7 +148,11 @@ ${P}${ROOT}-opt input{accent-color:#f73109;margin:3px 0 0;flex:none;width:16px;h
 ${P}${ROOT}-opt small{display:block;font-size:12px;color:rgba(87,87,87,.62);margin-top:2px}
 ${P}${ROOT} input[type=range]{width:100%;accent-color:#f73109;margin:6px 0 0}
 ${P}${ROOT}-scale{display:flex;justify-content:space-between;font-size:12px;color:rgba(87,87,87,.5)}
-${P}${ROOT}-hr{border:0;border-top:1px solid rgba(87,87,87,.12);margin:8px 0 18px}
+${P}${ROOT}-next{border:none;background:#f73109;color:#fff;border-radius:999px;padding:14px 32px;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit}
+${P}${ROOT}-next:hover{background:#d92b07}
+${P}${ROOT}-missing{font-size:13px;color:#d92b07;margin:10px 0 0}
+${P}${ROOT}-summary{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;background:#f6f4ef;border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.5;margin-bottom:18px}
+${P}${ROOT}-back{background:none;border:none;color:#f73109;font-weight:700;font-size:13px;cursor:pointer;padding:0;font-family:inherit;flex:none;text-decoration:underline}
 ${P}${ROOT}-contact{animation:${ROOT}FadeIn .35s ease-out}
 @keyframes ${ROOT}FadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 ${P}${ROOT}-steps{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-direction:column;gap:18px;counter-reset:s}
@@ -240,6 +248,7 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
         '<div class="' + ROOT + '-main">' +
           "<h3>" + esc(C.title) + "</h3>" +
           '<p class="' + ROOT + '-muted">' + esc(C.intro) + "</p>" +
+          '<div data-step1>' +
           '<div class="' + ROOT + '-grid">' +
             '<div class="' + ROOT + '-field"><label class="' + ROOT + '-lbl" for="' + ROOT + '-uurloon">' + esc(C.uurloon.label) +
               "<small>" + esc(C.uurloon.hint) + "</small></label>" +
@@ -249,12 +258,15 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
           radios("dienst", C.dienst) +
           '<div data-niveau style="display:none">' + radios("niveau", C.niveau) + "</div>" +
           '<div class="' + ROOT + '-grid">' + slider("medewerkers", C.medewerkers) + slider("uren", C.uren) + "</div>" +
-          // Contactgedeelte verschijnt pas als uurloon en alle keuzes ingevuld zijn.
-          '<div data-contact class="' + ROOT + '-contact" style="display:none">' +
-            '<hr class="' + ROOT + '-hr">' +
-            "<h4>" + esc(C.contactTitle) + "</h4>" +
-            '<div id="' + ROOT + '-hsform"></div>' +
-          "</div>" +
+          '<button type="button" data-next class="' + ROOT + '-next">' + esc(C.nextLabel) + "</button>" +
+          '<p data-missing class="' + ROOT + '-missing" style="display:none"></p>' +
+        "</div>" +
+        // Stap 2: contactgegevens. Vervangt stap 1 op dezelfde plek na een klik op de knop.
+        '<div data-step2 class="' + ROOT + '-contact" style="display:none">' +
+          "<h4>" + esc(C.contactTitle) + "</h4>" +
+          '<div class="' + ROOT + '-summary"><span data-summary></span><button type="button" data-back class="' + ROOT + '-back">' + esc(C.backLabel) + "</button></div>" +
+          '<div id="' + ROOT + '-hsform"></div>' +
+        "</div>" +
         "</div>" +
         '<div class="' + ROOT + '-side"><h3>' + esc(C.side.title) + '</h3><ol class="' + ROOT + '-steps">' +
           C.side.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") +
@@ -297,6 +309,28 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
       return v.uurloon !== null && v.statuut && v.dienst && (v.dienst !== "selectie" || v.niveau);
     }
 
+    function optLabel(cfg, value) {
+      for (var i = 0; i < cfg.options.length; i++) if (cfg.options[i].value === value) return cfg.options[i].label;
+      return "";
+    }
+
+    function summary(v) {
+      return [
+        optLabel(C.statuut, v.statuut),
+        optLabel(C.dienst, v.dienst) + (v.niveau ? " (" + optLabel(C.niveau, v.niveau) + ")" : ""),
+        "€ " + v.uurloon.toFixed(2).replace(".", ",") + "/uur",
+        v.medewerkers + " medewerker" + (v.medewerkers === "1" ? "" : "s"),
+        v.uren + " uur/week"
+      ].join(" · ");
+    }
+
+    function showStep(n) {
+      q("[data-step1]").style.display = n === 1 ? "block" : "none";
+      q("[data-step2]").style.display = n === 2 ? "block" : "none";
+      var top = mount.getBoundingClientRect().top;
+      if (top < 0) mount.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
     function update() {
       var v = values();
       q('[data-out="medewerkers"]').textContent = v.medewerkers;
@@ -306,7 +340,7 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
         l.classList.toggle("on", l.querySelector("input").checked);
       });
       var ok = complete(v);
-      q("[data-contact]").style.display = ok || submitted ? "block" : "none";
+      if (ok) q("[data-missing]").style.display = "none";
       if (!hsForm) return;
       var btn = hsForm.querySelector(".hs-button");
       if (btn) btn.disabled = !ok;
@@ -320,6 +354,26 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
     mount.addEventListener("input", onOwnInput);
     mount.addEventListener("change", onOwnInput);
     update();
+
+    q("[data-next]").addEventListener("click", function () {
+      var v = values();
+      if (!complete(v)) {
+        var missing = [];
+        if (v.uurloon === null) missing.push(C.missingNames.uurloon);
+        if (!v.statuut) missing.push(C.missingNames.statuut);
+        if (!v.dienst) missing.push(C.missingNames.dienst);
+        if (v.dienst === "selectie" && !v.niveau) missing.push(C.missingNames.niveau);
+        var m = q("[data-missing]");
+        m.textContent = C.missingText + missing.join(", ") + ".";
+        m.style.display = "block";
+        return;
+      }
+      update();
+      q("[data-summary]").textContent = summary(v);
+      showStep(2);
+    });
+
+    q("[data-back]").addEventListener("click", function () { showStep(1); });
 
     loadHubSpot(h.region, function () {
       window.hbspt.forms.create({
@@ -350,6 +404,7 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
         onBeforeFormSubmit: function () { update(); },
         onFormSubmitted: function () {
           submitted = true;
+          q("." + ROOT + "-summary").style.display = "none";
           if (typeof window.dataLayer !== "undefined") {
             var v = values();
             window.dataLayer.push({ event: "werkgeverskost_lead", statuut: v.statuut, dienst: v.dienst, functieniveau: v.niveau, aantal_medewerkers: v.medewerkers, uren_per_week: v.uren });
