@@ -75,7 +75,6 @@
 
     contactTitle: "Waar mogen we de berekening naartoe sturen?",
     thanksText: "Bedankt! We bezorgen je de volledige berekening zo snel mogelijk per e-mail.",
-    incompleteText: "Vul eerst het uurloon in en maak je keuzes hierboven.",
     loadError: "Het formulier kon niet geladen worden. Herlaad de pagina en probeer opnieuw.",
 
     // Rechterpaneel
@@ -134,7 +133,8 @@ ${P}${ROOT}-opt small{display:block;font-size:12px;color:rgba(87,87,87,.62);marg
 ${P}${ROOT} input[type=range]{width:100%;accent-color:#f73109;margin:6px 0 0}
 ${P}${ROOT}-scale{display:flex;justify-content:space-between;font-size:12px;color:rgba(87,87,87,.5)}
 ${P}${ROOT}-hr{border:0;border-top:1px solid rgba(87,87,87,.12);margin:8px 0 18px}
-${P}${ROOT}-note{font-size:13px;color:#d92b07;margin:0 0 10px}
+${P}${ROOT}-contact{animation:${ROOT}FadeIn .35s ease-out}
+@keyframes ${ROOT}FadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 ${P}${ROOT}-steps{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-direction:column;gap:18px;counter-reset:s}
 ${P}${ROOT}-steps li{counter-increment:s;display:flex;gap:14px;align-items:flex-start;font-size:15px;line-height:1.5}
 ${P}${ROOT}-steps li::before{content:counter(s,decimal-leading-zero);font-family:'Baloo Paaji 2',sans-serif;font-weight:800;font-size:24px;line-height:1;flex:none;opacity:.85}
@@ -225,10 +225,12 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
           radios("dienst", C.dienst) +
           '<div data-niveau style="display:none">' + radios("niveau", C.niveau) + "</div>" +
           '<div class="' + ROOT + '-grid">' + slider("medewerkers", C.medewerkers) + slider("uren", C.uren) + "</div>" +
-          '<hr class="' + ROOT + '-hr">' +
-          "<h4>" + esc(C.contactTitle) + "</h4>" +
-          '<p data-incomplete class="' + ROOT + '-note">' + esc(C.incompleteText) + "</p>" +
-          '<div id="' + ROOT + '-hsform"></div>' +
+          // Contactgedeelte verschijnt pas als uurloon en alle keuzes ingevuld zijn.
+          '<div data-contact class="' + ROOT + '-contact" style="display:none">' +
+            '<hr class="' + ROOT + '-hr">' +
+            "<h4>" + esc(C.contactTitle) + "</h4>" +
+            '<div id="' + ROOT + '-hsform"></div>' +
+          "</div>" +
         "</div>" +
         '<div class="' + ROOT + '-side"><h3>' + esc(C.side.title) + '</h3><ol class="' + ROOT + '-steps">' +
           C.side.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") +
@@ -280,7 +282,7 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
         l.classList.toggle("on", l.querySelector("input").checked);
       });
       var ok = complete(v);
-      q("[data-incomplete]").style.display = ok || submitted ? "none" : "block";
+      q("[data-contact]").style.display = ok || submitted ? "block" : "none";
       if (!hsForm) return;
       var btn = hsForm.querySelector(".hs-button");
       if (btn) btn.disabled = !ok;
@@ -317,7 +319,6 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
         onBeforeFormSubmit: function () { update(); },
         onFormSubmitted: function () {
           submitted = true;
-          q("[data-incomplete]").style.display = "none";
           if (typeof window.dataLayer !== "undefined") {
             var v = values();
             window.dataLayer.push({ event: "werkgeverskost_lead", statuut: v.statuut, dienst: v.dienst, functieniveau: v.niveau, aantal_medewerkers: v.medewerkers, uren_per_week: v.uren });
