@@ -51,7 +51,7 @@
       }
     },
 
-    title: "Wat kost een medewerker?",
+    title: "Wat kost een flexi-jobber jou?",
     intro: "Vul je situatie in en we bezorgen je de volledige berekening per e-mail.",
 
     uurloon: { label: "Bruto-uurloon", hint: "€/uur", placeholder: "Bv. 15,00" },
