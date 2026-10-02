@@ -10,7 +10,7 @@ overal ingesloten met een klein snippet. Eén keer aanpassen = overal bijgewerkt
 | `flexi-job.js` | Flexi-Job check | `<div id="flexi-job-tool">` |
 | `inkomsten-limiet.js` | Hoeveel mag je bijverdienen? | `<div id="inkomsten-limiet-tool">` |
 | `flexi-pc-checker.js` | PC-checker + lead-formulier | `<div id="flexi-checker-container-leadgen">` |
-| `werkgeverskost.js` | Rekentool werkgeverskost + lead-formulier | `<div id="werkgeverskost-tool">` |
+| `werkgeverskost.js` | Wat kost een medewerker? (aanvraag berekening) | `<div id="werkgeverskost-tool">` |
 | `vacature-doorsturen.js` | Waarom Nestor + stuur je vacature door | `<div id="vacature-doorsturen-tool">` |
 
 > - `flexi-pc-checker.js` stuurt e-mailleads naar een Google Apps Script (`scriptUrl` in CONFIG).
