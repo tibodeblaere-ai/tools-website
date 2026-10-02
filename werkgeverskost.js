@@ -17,12 +17,14 @@
   var CONFIG = {
     mountId: "werkgeverskost-tool",
 
-    // HubSpot Forms API (publiek endpoint, geen geheim).
+    // HubSpot-formulier. Wordt via HubSpot's eigen embed-script getoond, zodat CAPTCHA en
+    // eventuele toestemmingsvakjes blijven werken. Velden pas je aan in HubSpot zelf.
+    // hideFields: interne veldnamen die in deze tool verborgen worden (voorlopig zelfde formulier als de vacaturetool).
     hubspot: {
       portalId: "7551812",
-      formGuid: "3df4559c-5ce5-4835-bd46-195983326f2d",
+      formId: "3df4559c-5ce5-4835-bd46-195983326f2d",
       region: "eu1",
-      pageName: "Rekentool werkgeverskost flexi-job"
+      hideFields: ["vacaturelink", "bijlage"]
     },
 
     // Berekening: vakantiegeld = % van het brutoloon; RSZ = bijzondere werkgeversbijdrage flexi-jobs (28%)
@@ -46,16 +48,12 @@
 
     captureTitle: "Nog één stap",
     captureText: "Laat je gegevens achter en we bezorgen je de volledige berekening.",
-    placeholders: { bedrijf: "Bedrijf", naam: "Naam", email: "E-mail", tel: "Telefoonnummer" },
-    submitLabel: "Bezorg mij de berekening",
-    sendingLabel: "Verzenden...",
 
     thanksTitle: "Bedankt!",
     thanksText: "We bezorgen je de volledige werkgeverskost-berekening zo snel mogelijk per e-mail.",
     resetLabel: "Opnieuw berekenen",
 
-    errorEmail: "Gelieve een geldig e-mailadres in te vullen.",
-    errorSend: "Er ging iets mis. Probeer het later opnieuw.",
+    loadError: "Het formulier kon niet geladen worden. Herlaad de pagina en probeer opnieuw.",
     footnote: "Indicatieve berekening op basis van het opgegeven uurloon en aantal uren."
   };
 
@@ -84,9 +82,23 @@ ${P}${ROOT}-h{font-size:19px;margin-bottom:4px}
 ${P}${ROOT}-muted{color:#b4b2a9;font-size:14px;line-height:1.5;margin:0 0 22px}
 ${P}${ROOT}-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px}
 ${P}${ROOT} label{display:block;font-size:13px;font-weight:600;color:#f6f4ef;margin-bottom:6px}
-${P}${ROOT} input{width:100%;padding:12px 14px;border:1px solid #575757;border-radius:14px;background:#3d3d3a;color:#f6f4ef;font-size:15px;font-weight:600;outline:none;font-family:inherit}
+${P}${ROOT} input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=submit]){width:100%;padding:12px 14px;border:1px solid #575757;border-radius:14px;background:#3d3d3a;color:#f6f4ef;font-size:15px;font-weight:600;outline:none;font-family:inherit}
 ${P}${ROOT} input:focus{border-color:#f73109}
-${P}${ROOT}-capture input{background:#2c2c2a;font-size:14px;font-weight:400}
+${P}${ROOT}-capture .hs-form-field{margin-bottom:12px}
+${P}${ROOT}-capture fieldset{max-width:none!important;border:0;padding:0;margin:0}
+${P}${ROOT}-capture fieldset.form-columns-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0 12px}
+${P}${ROOT}-capture fieldset .hs-form-field{width:auto!important;float:none!important}
+${P}${ROOT}-capture fieldset .input{margin:0!important}
+${P}${ROOT}-capture .hs-form-required{color:#f73109;margin-left:2px}
+${P}${ROOT}-capture .hs-input:not([type=checkbox]):not([type=radio]):not([type=file]){width:100%!important;background:#2c2c2a;font-size:14px;font-weight:400}
+${P}${ROOT}-capture .hs-error-msgs{list-style:none;padding:0;margin:4px 0 0}
+${P}${ROOT}-capture .hs-error-msg,${P}${ROOT}-capture .hs-main-font-element{color:#ff8a70;font-size:12px}
+${P}${ROOT}-capture .inputs-list{list-style:none;padding:0;margin:0 0 8px}
+${P}${ROOT}-capture .inputs-list label{font-weight:600}
+${P}${ROOT}-capture .hs-form a{color:#f73109}
+${P}${ROOT}-capture .legal-consent-container{font-size:12px;line-height:1.5;color:#b4b2a9}
+${P}${ROOT}-capture .hs-button{border:none;background:#f73109;color:#fff;border-radius:999px;padding:14px 30px;font-weight:700;font-size:15px;cursor:pointer;margin-top:4px;font-family:inherit;-webkit-appearance:none}
+${P}${ROOT}-capture .hs-button:hover{background:#d92b07}
 ${P}${ROOT}-teaser{position:relative;margin-top:20px;border-radius:18px;overflow:hidden}
 ${P}${ROOT}-rows{background:#3d3d3a;border-radius:18px;padding:8px 22px 20px;filter:blur(8px);user-select:none;pointer-events:none}
 ${P}${ROOT}-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:14px}
@@ -103,6 +115,7 @@ ${P}${ROOT}-btn:disabled{opacity:.6;cursor:not-allowed}
 ${P}${ROOT}-btn.ghost{border:1px solid #f73109;background:transparent;color:#f73109;padding:11px 26px;font-size:14px}
 ${P}${ROOT}-err{color:#ff8a70;font-size:13px;margin:0}
 ${P}${ROOT}-foot{color:#b4b2a9;font-size:12px;line-height:1.4;margin:14px 0 0}`;
+    css += CONFIG.hubspot.hideFields.map(function (n) { return P + ROOT + "-capture .hs_" + n + "{display:none!important}"; }).join("");
     var style = document.createElement("style");
     style.id = ROOT + "-styles";
     style.textContent = css;
@@ -117,24 +130,21 @@ ${P}${ROOT}-foot{color:#b4b2a9;font-size:12px;line-height:1.4;margin:14px 0 0}`;
     return (Math.round(p * 10000) / 100).toString().replace(".", ",") + "%";
   }
 
-  function hubspotCookie() {
-    var m = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/);
-    return m ? m[1] : null;
-  }
+  var HS_SCRIPT_ID = "nestor-hs-forms-v2";
 
-  function submitToHubSpot(fields) {
-    var h = CONFIG.hubspot;
-    var context = { pageUri: location.href, pageName: h.pageName };
-    var hutk = hubspotCookie();
-    if (hutk) context.hutk = hutk;
-    var url = "https://api-" + h.region + ".hsforms.com/submissions/v3/integration/submit/" + h.portalId + "/" + h.formGuid;
-    return fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fields: fields, context: context })
-    }).then(function (res) {
-      if (!res.ok) throw new Error("HubSpot " + res.status);
-    });
+  // Laadt HubSpot's embed-script (één keer per pagina) en roept cb aan zodra het klaar is.
+  function loadHubSpot(region, cb, onError) {
+    if (window.hbspt && window.hbspt.forms) return cb();
+    var sc = document.getElementById(HS_SCRIPT_ID);
+    if (!sc) {
+      sc = document.createElement("script");
+      sc.id = HS_SCRIPT_ID;
+      sc.src = "https://js-" + region + ".hsforms.net/forms/embed/v2.js";
+      sc.async = true;
+      document.head.appendChild(sc);
+    }
+    sc.addEventListener("load", function () { window.hbspt && window.hbspt.forms ? cb() : onError(); });
+    sc.addEventListener("error", onError);
   }
 
   function build(mount) {
@@ -160,14 +170,7 @@ ${P}${ROOT}-foot{color:#b4b2a9;font-size:12px;line-height:1.4;margin:14px 0 0}`;
         '<div data-capture class="' + ROOT + "-box " + ROOT + '-capture" style="display:none">' +
           '<div class="' + ROOT + '-h">' + esc(C.captureTitle) + "</div>" +
           '<p class="' + ROOT + '-muted" style="margin-bottom:18px">' + esc(C.captureText) + "</p>" +
-          '<div class="' + ROOT + '-stack">' +
-            '<input data-bedrijf type="text" autocomplete="organization" placeholder="' + esc(ph.bedrijf) + '">' +
-            '<input data-naam type="text" autocomplete="name" placeholder="' + esc(ph.naam) + '">' +
-            '<input data-email type="email" autocomplete="email" placeholder="' + esc(ph.email) + '">' +
-            '<input data-tel type="tel" autocomplete="tel" placeholder="' + esc(ph.tel) + '">' +
-            '<p data-err class="' + ROOT + '-err" style="display:none"></p>' +
-            '<button type="button" data-submit class="' + ROOT + '-btn">' + esc(C.submitLabel) + "</button>" +
-          "</div>" +
+          '<div id="' + ROOT + '-hsform"></div>' +
         "</div>" +
         '<div data-thanks class="' + ROOT + '-box" style="display:none;text-align:center">' +
           '<div class="' + ROOT + '-h" style="margin-bottom:6px">' + esc(C.thanksTitle) + "</div>" +
@@ -183,7 +186,9 @@ ${P}${ROOT}-foot{color:#b4b2a9;font-size:12px;line-height:1.4;margin:14px 0 0}`;
     var r = mount;
     var q = function (a) { return r.querySelector("[data-" + a + "]"); };
     var f = new Intl.NumberFormat("nl-BE", { style: "currency", currency: "EUR" });
-    var ul = q("uurloon"), ur = q("uren"), err = q("err"), btn = q("submit");
+    var ul = q("uurloon"), ur = q("uren");
+    var h = CONFIG.hubspot;
+    var target = mount.querySelector("#" + ROOT + "-hsform");
 
     function num(v) { var n = parseFloat(String(v).replace(",", ".")); return isNaN(n) || n < 0 ? 0 : n; }
 
@@ -200,53 +205,38 @@ ${P}${ROOT}-foot{color:#b4b2a9;font-size:12px;line-height:1.4;margin:14px 0 0}`;
       ["teaser", "capture", "thanks"].forEach(function (a) { q(a).style.display = a === name ? "block" : "none"; });
     }
 
-    function val(a) { return (q(a).value || "").trim(); }
+    function createForm() {
+      target.innerHTML = "";
+      loadHubSpot(h.region, function () {
+        window.hbspt.forms.create({
+          region: h.region,
+          portalId: h.portalId,
+          formId: h.formId,
+          target: "#" + ROOT + "-hsform",
+          css: "", // HubSpot-standaardstijl uit, onze eigen stijl hierboven
+          inlineMessage: CONFIG.thanksText, // geen redirect naar de bedankpagina van het formulier
+          onFormSubmitted: function () {
+            show("thanks");
+            if (typeof window.dataLayer !== "undefined") {
+              window.dataLayer.push({ event: "werkgeverskost_lead", uurloon: num(ul.value), uren: num(ur.value) });
+            }
+          }
+        });
+      }, function () {
+        target.innerHTML = '<p class="' + ROOT + '-err">' + esc(CONFIG.loadError) + "</p>";
+      });
+    }
 
     ul.addEventListener("input", calc);
     ur.addEventListener("input", calc);
     calc();
 
-    q("reveal").addEventListener("click", function () { show("capture"); });
-
-    btn.addEventListener("click", function () {
-      var email = val("email");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        err.textContent = CONFIG.errorEmail;
-        err.style.display = "block";
-        return;
-      }
-      err.style.display = "none";
-      btn.disabled = true;
-      btn.textContent = CONFIG.sendingLabel;
-
-      submitToHubSpot([
-        { name: "email", value: email },
-        { name: "firstname", value: val("naam") },
-        { name: "phone", value: val("tel") },
-        { name: "company", value: val("bedrijf") }
-      ])
-        .then(function () {
-          show("thanks");
-          if (typeof window.dataLayer !== "undefined") {
-            window.dataLayer.push({ event: "werkgeverskost_lead", uurloon: num(ul.value), uren: num(ur.value) });
-          }
-        })
-        .catch(function (e) {
-          if (window.console) console.error("Werkgeverskost:", e);
-          err.textContent = CONFIG.errorSend;
-          err.style.display = "block";
-        })
-        .then(function () {
-          btn.disabled = false;
-          btn.textContent = CONFIG.submitLabel;
-        });
+    q("reveal").addEventListener("click", function () {
+      show("capture");
+      createForm();
     });
 
-    q("reset").addEventListener("click", function () {
-      ["bedrijf", "naam", "email", "tel"].forEach(function (a) { q(a).value = ""; });
-      err.style.display = "none";
-      show("teaser");
-    });
+    q("reset").addEventListener("click", function () { show("teaser"); });
   }
 
   function init() {
