@@ -29,6 +29,18 @@
       formId: "3f04e1ec-065f-4adc-a6b4-372fef4a2f1d",
       region: "eu1",
       hideFields: [], // velden van het formulier die je in deze tool niet wil tonen
+      // Teksten die we over die van HubSpot heen zetten (key = interne veldnaam). Enkel de zichtbare tekst
+      // verandert; het veld zelf blijft hetzelfde, dus antwoorden komen in de juiste eigenschap terecht.
+      labels: {
+        firstname: "Voornaam",
+        lastname: "Achternaam",
+        email: "E-mail",
+        company: "Naam onderneming",
+        btw_nummer: "BTW-nummer",
+        phone: "Telefoonnummer"
+      },
+      submitText: "Verstuur mijn aanvraag",
+      locale: "nl", // taal van HubSpot's foutmeldingen
       hiddenFields: {
         uurloon: "bruto_uurloon____uur__",
         statuut: "statuut",
@@ -147,7 +159,7 @@ ${P}${ROOT} fieldset .input{margin:0!important}
 ${P}${ROOT} .hs-form label{display:block;font-size:13px;font-weight:600;color:#575757;margin-bottom:6px}
 ${P}${ROOT} .hs-form-required{color:#f73109;margin-left:2px}
 ${P}${ROOT} .hs-error-msgs{list-style:none;padding:0;margin:4px 0 0}
-${P}${ROOT} .hs-error-msg,${P}${ROOT} .hs-main-font-element{color:#d92b07;font-size:12px}
+${P}${ROOT} .hs-form .hs-error-msgs label,${P}${ROOT} .hs-error-msg,${P}${ROOT} .hs-main-font-element{color:#d92b07;font-size:12px;font-weight:500;margin:0}
 ${P}${ROOT} .inputs-list{list-style:none;padding:0;margin:0 0 8px}
 ${P}${ROOT} .inputs-list label{font-weight:600}
 ${P}${ROOT} .hs-form a{color:#f73109}
@@ -193,6 +205,18 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
     input.dispatchEvent(new Event("input", { bubbles: true }));
     input.dispatchEvent(new Event("change", { bubbles: true }));
     return true;
+  }
+
+  // Zet onze labels en knoptekst in het HubSpot-formulier. HubSpot kan het formulier opnieuw tekenen
+  // (bv. bij foutmeldingen), daarom passen we dit ook toe na elke wijziging in het formulier.
+  function applyLabels(form) {
+    var labels = CONFIG.hubspot.labels || {};
+    Object.keys(labels).forEach(function (name) {
+      var field = form.querySelector(".hs_" + name + " > label span:first-child");
+      if (field && field.textContent !== labels[name]) field.textContent = labels[name];
+    });
+    var btn = form.querySelector("input.hs-button");
+    if (btn && CONFIG.hubspot.submitText && btn.value !== CONFIG.hubspot.submitText) btn.value = CONFIG.hubspot.submitText;
   }
 
   function radios(key, cfg) {
@@ -305,8 +329,15 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
         target: "#" + ROOT + "-hsform",
         css: "", // HubSpot-standaardstijl uit, onze eigen stijl hierboven
         inlineMessage: C.thanksText, // geen redirect naar de bedankpagina van het formulier
+        submitText: h.submitText,
+        locale: h.locale,
         onFormReady: function () {
           hsForm = target.querySelector("form");
+          if (hsForm) {
+            applyLabels(hsForm);
+            new MutationObserver(function () { applyLabels(hsForm); })
+              .observe(hsForm, { childList: true, subtree: true, characterData: true });
+          }
           if (hsForm && window.console) {
             Object.keys(h.hiddenFields).forEach(function (k) {
               if (!hsForm.querySelector('input[name="' + h.hiddenFields[k] + '"]')) {
