@@ -3,7 +3,7 @@
  * Eén zelfstandig bestand. Sluit overal in met:
  *
  *   <div id="flexi-job-tool"></div>
- *   <script src="https://cdn.jsdelivr.net/gh/tibodeblaere-ai/tools-website@v1/flexi-job.js" defer></script>
+ *   <script src="https://cdn.jsdelivr.net/gh/tibodeblaere-ai/tools-website@main/flexi-job.js" defer></script>
  *
  * Inhoud aanpassen? Pas alleen het CONFIG-blok hieronder aan.
  * De logica eronder hoef je normaal niet aan te raken.
