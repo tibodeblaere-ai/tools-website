@@ -26,11 +26,11 @@
     // voeg die velden met exact deze interne namen als "verborgen veld" toe aan het formulier.
     hubspot: {
       portalId: "7551812",
-      formId: "3df4559c-5ce5-4835-bd46-195983326f2d",
+      formId: "3f04e1ec-065f-4adc-a6b4-372fef4a2f1d",
       region: "eu1",
-      hideFields: ["vacaturelink", "bijlage"], // velden van het formulier die je in deze tool niet wil tonen
+      hideFields: [], // velden van het formulier die je in deze tool niet wil tonen
       hiddenFields: {
-        uurloon: "bruto_uurloon",
+        uurloon: "bruto_uurloon____uur__",
         statuut: "statuut",
         dienst: "dienst",
         niveau: "functieniveau",
