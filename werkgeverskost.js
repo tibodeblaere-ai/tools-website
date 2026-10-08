@@ -176,7 +176,6 @@ ${P}${ROOT} .hs-button:hover{background:#d92b07}
 ${P}${ROOT} .hs-button:disabled{opacity:.5;cursor:not-allowed}
 ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24px;text-align:center;color:#575757;font-size:15px;line-height:1.5;animation:${ROOT}FadeIn .35s ease-out}
 @media (max-width:760px){${P}${ROOT}{grid-template-columns:1fr}${P}${ROOT}-main,${P}${ROOT}-side{padding:28px 22px}}`;
-    css += CONFIG.hubspot.hideFields.map(function (n) { return P + ROOT + " .hs_" + n + "{display:none!important}"; }).join("");
     var style = document.createElement("style");
     style.id = ROOT + "-styles";
     style.textContent = css;
@@ -216,11 +215,28 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
 
   // Zet onze labels en knoptekst in het HubSpot-formulier. HubSpot kan het formulier opnieuw tekenen
   // (bv. bij foutmeldingen), daarom passen we dit ook toe na elke wijziging in het formulier.
+  // Velden van andere objecten krijgen een prefix in HubSpot (bv. bedrijfseigenschap "0-2/btw_nummer"),
+  // daarom zoeken we velden op hun naam, met of zonder prefix.
+  function fieldsByName(form) {
+    var map = {};
+    Array.prototype.forEach.call(form.querySelectorAll(".hs-form-field"), function (f) {
+      var input = f.querySelector("[name]");
+      if (!input) return;
+      map[input.name] = f;
+      map[input.name.split("/").pop()] = f;
+    });
+    return map;
+  }
+
   function applyLabels(form) {
     var labels = CONFIG.hubspot.labels || {};
+    var fields = fieldsByName(form);
+    (CONFIG.hubspot.hideFields || []).forEach(function (name) {
+      if (fields[name] && fields[name].style.display !== "none") fields[name].style.display = "none";
+    });
     Object.keys(labels).forEach(function (name) {
-      var field = form.querySelector(".hs_" + name + " > label span:first-child");
-      if (field && field.textContent !== labels[name]) field.textContent = labels[name];
+      var span = fields[name] && fields[name].querySelector("label span:first-child");
+      if (span && span.textContent !== labels[name]) span.textContent = labels[name];
     });
     var btn = form.querySelector("input.hs-button");
     if (btn && CONFIG.hubspot.submitText && btn.value !== CONFIG.hubspot.submitText) btn.value = CONFIG.hubspot.submitText;
