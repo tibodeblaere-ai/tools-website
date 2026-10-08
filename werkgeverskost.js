@@ -420,6 +420,7 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
         onFormSubmitted: function () {
           submitted = true;
           q("." + ROOT + "-summary").style.display = "none";
+          q("[data-step2] h4").style.display = "none";
           if (typeof window.dataLayer !== "undefined") {
             var v = values();
             window.dataLayer.push({ event: "werkgeverskost_lead", statuut: v.statuut, dienst: v.dienst, functieniveau: v.niveau, aantal_medewerkers: v.medewerkers, uren_per_week: v.uren });
