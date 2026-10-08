@@ -51,7 +51,7 @@
     },
 
     title: "Wat kost een flexi-jobber jou?",
-    intro: "Vul je situatie in en ontvang meteen een indicatieve prijs per uur.",
+    intro: "Vul je situatie in. We bekijken de kost voor jouw situatie en nemen contact met je op.",
 
     uurloon: { label: "Bruto-uurloon", hint: "€/uur", placeholder: "Bv. 15,00" },
 
@@ -84,28 +84,12 @@
     medewerkers: { label: "Aantal medewerkers", min: 1, max: 20, start: 1, maxLabel: "20+" },
     uren: { label: "Aantal uur per week per medewerker", min: 1, max: 38, start: 20 },
 
-    nextLabel: "Bereken mijn prijs",
+    nextLabel: "Vraag mijn prijs aan",
     missingText: "Vul nog in: ",
     missingNames: { uurloon: "het bruto-uurloon", statuut: "het statuut", dienst: "wat je nodig hebt", niveau: "het type functie" },
-    contactTitle: "Bijna klaar! Laat je gegevens achter en zie meteen je prijs.",
+    contactTitle: "Bijna klaar! Waar mogen we je contacteren?",
     backLabel: "Wijzig",
-    thanksText: " ", // HubSpot-bedankbericht; wordt verborgen, de tool toont zelf het resultaat
-
-    // Coëfficiënten (bron: Coëfficiënten Nestor 2026). Prijs per uur = bruto-uurloon × coëfficiënt.
-    // LET OP: deze staan in publieke code en zijn dus zichtbaar voor wie de broncode bekijkt.
-    coefficienten: {
-      selectie: {
-        arbeider_bediende: { uitvoerend_admin: 1.90, gespecialiseerd: 2.00, expert: 2.10 },
-        flexi: { uitvoerend_admin: 1.65, gespecialiseerd: 1.75, expert: 1.85 }
-      },
-      payroll: { arbeider_bediende: 1.70, flexi: 1.55 }
-    },
-    result: {
-      label: "Jouw indicatieve prijs",
-      unit: "per gewerkt uur, excl. btw",
-      contact: "Bedankt! We nemen snel contact met je op om dit samen te bespreken.",
-      footnote: "* Indicatie op basis van het opgegeven brutoloon. Eventuele extra kosten zijn hier nog niet in meegerekend."
-    },
+    thanksText: "Bedankt! Binnenkort nemen we contact met je op om de prijs voor jouw situatie samen te bespreken.",
     loadError: "Het formulier kon niet geladen worden. Herlaad de pagina en probeer opnieuw.",
 
     // Rechterpaneel
@@ -113,8 +97,8 @@
       title: "Zo werkt het",
       steps: [
         "Je geeft het uurloon, het statuut en het aantal uren door.",
-        "Je ziet meteen een indicatieve prijs per uur.",
-        "We nemen contact op om je situatie samen te bekijken, zonder verplichtingen."
+        "We berekenen de kost voor jouw situatie.",
+        "Binnenkort nemen we contact op om de prijs samen te bespreken, zonder verplichtingen."
       ]
     }
   };
@@ -190,14 +174,7 @@ ${P}${ROOT} .legal-consent-container{font-size:12px;line-height:1.5;color:rgba(8
 ${P}${ROOT} .hs-button{border:none;background:#f73109;color:#fff;border-radius:999px;padding:14px 32px;font-weight:700;font-size:15px;cursor:pointer;margin-top:4px;font-family:inherit;-webkit-appearance:none}
 ${P}${ROOT} .hs-button:hover{background:#d92b07}
 ${P}${ROOT} .hs-button:disabled{opacity:.5;cursor:not-allowed}
-${P}${ROOT} .submitted-message{display:none!important}
-${P}${ROOT}-result{background:#feeae6;border-radius:18px;padding:28px 24px;text-align:center;animation:${ROOT}FadeIn .35s ease-out}
-${P}${ROOT}-result-lbl{font-size:14px;font-weight:700;color:#575757}
-${P}${ROOT}-price{font-family:'Baloo Paaji 2',sans-serif;font-weight:800;font-size:48px;color:#f73109;line-height:1.1;margin:6px 0 0}
-${P}${ROOT}-price sup{font-size:24px;margin-left:2px}
-${P}${ROOT}-unit{font-size:14px;color:rgba(87,87,87,.62);margin:2px 0 16px}
-${P}${ROOT}-result p{margin:0;font-size:15px;line-height:1.5}
-${P}${ROOT}-foot{font-size:12px;line-height:1.5;color:rgba(87,87,87,.62);margin:16px 0 0}
+${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24px;text-align:center;color:#575757;font-size:15px;line-height:1.5;animation:${ROOT}FadeIn .35s ease-out}
 @media (max-width:760px){${P}${ROOT}{grid-template-columns:1fr}${P}${ROOT}-main,${P}${ROOT}-side{padding:28px 22px}}`;
     css += CONFIG.hubspot.hideFields.map(function (n) { return P + ROOT + " .hs_" + n + "{display:none!important}"; }).join("");
     var style = document.createElement("style");
@@ -289,16 +266,6 @@ ${P}${ROOT}-foot{font-size:12px;line-height:1.5;color:rgba(87,87,87,.62);margin:
           '<div class="' + ROOT + '-summary"><span data-summary></span><button type="button" data-back class="' + ROOT + '-back">' + esc(C.backLabel) + "</button></div>" +
           '<div id="' + ROOT + '-hsform"></div>' +
         "</div>" +
-        // Resultaat: verschijnt na het versturen van het formulier.
-        '<div data-result style="display:none">' +
-          '<div class="' + ROOT + '-result">' +
-            '<div class="' + ROOT + '-result-lbl">' + esc(C.result.label) + "</div>" +
-            '<div class="' + ROOT + '-price"><span data-price></span><sup>*</sup></div>' +
-            '<div class="' + ROOT + '-unit">' + esc(C.result.unit) + "</div>" +
-            "<p>" + esc(C.result.contact) + "</p>" +
-          "</div>" +
-          '<p class="' + ROOT + '-foot">' + esc(C.result.footnote) + "</p>" +
-        "</div>" +
         "</div>" +
         '<div class="' + ROOT + '-side"><h3>' + esc(C.side.title) + '</h3><ol class="' + ROOT + '-steps">' +
           C.side.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") +
@@ -354,13 +321,6 @@ ${P}${ROOT}-foot{font-size:12px;line-height:1.5;color:rgba(87,87,87,.62);margin:
         v.medewerkers + " medewerker" + (v.medewerkers === "1" ? "" : "s"),
         v.uren + " uur/week"
       ].join(" · ");
-    }
-
-    function coefficient(v) {
-      var c = C.coefficienten[v.dienst];
-      c = c && c[v.statuut];
-      if (c && typeof c === "object") c = c[v.niveau];
-      return typeof c === "number" ? c : null;
     }
 
     function showStep(n) {
@@ -443,15 +403,7 @@ ${P}${ROOT}-foot{font-size:12px;line-height:1.5;color:rgba(87,87,87,.62);margin:
         onBeforeFormSubmit: function () { update(); },
         onFormSubmitted: function () {
           submitted = true;
-          var v = values(), coef = coefficient(v);
-          if (coef !== null && v.uurloon !== null) {
-            var f = new Intl.NumberFormat("nl-BE", { style: "currency", currency: "EUR" });
-            q("[data-price]").textContent = f.format(Math.round(v.uurloon * coef * 100) / 100);
-            q("[data-step2]").style.display = "none";
-            q("[data-result]").style.display = "block";
-          } else {
-            q("." + ROOT + "-summary").style.display = "none";
-          }
+          q("." + ROOT + "-summary").style.display = "none";
           if (typeof window.dataLayer !== "undefined") {
             var v = values();
             window.dataLayer.push({ event: "werkgeverskost_lead", statuut: v.statuut, dienst: v.dienst, functieniveau: v.niveau, aantal_medewerkers: v.medewerkers, uren_per_week: v.uren });
