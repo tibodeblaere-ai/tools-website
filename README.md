@@ -24,7 +24,7 @@ Plak de mount-div en het script waar de tool moet verschijnen, bijvoorbeeld:
 
 ```html
 <div id="flexi-job-tool"></div>
-<script src="https://cdn.jsdelivr.net/gh/tibodeblaere-ai/tools-website@main/flexi-job.js" defer></script>
+<script src="https://tibodeblaere-ai.github.io/tools-website/flexi-job.js" defer></script>
 ```
 
 Voor de andere tools vervang je de mount-div en de bestandsnaam volgens de tabel.
@@ -41,12 +41,15 @@ hoef je niet aan te raken.
 
 ## Een aanpassing live zetten
 
-De snippets laden altijd `@main`. Push (of merge) je naar `main`, dan leegt de
-GitHub Action `Purge jsDelivr cache` meteen de cache van de gewijzigde bestanden.
-Binnen een minuut staat de nieuwe versie overal live, zonder iets in het CMS aan te passen.
+De tools worden geladen via **GitHub Pages** (`https://tibodeblaere-ai.github.io/tools-website/…`).
+Push (of merge) je naar `main`, dan staat de nieuwe versie binnen ongeveer een minuut online.
+Browsers bewaren het bestand maximaal 10 minuten, dus na ten laatste ~10 minuten ziet iedereen de nieuwe versie.
+Je hoeft niets in het CMS aan te passen.
 
-Zie je de wijziging toch niet? Start de Action dan handmatig via
-**Actions → Purge jsDelivr cache → Run workflow**. Die leegt de cache van alle bestanden.
+> Vroeger liepen de snippets via jsDelivr (`cdn.jsdelivr.net/gh/…@main/…`). Dat bleek onbetrouwbaar:
+> browsers bewaarden het bestand tot 7 dagen en jsDelivr bleef soms uren een oude versie leveren.
+> Staat er in het CMS nog een jsDelivr-link, vervang die dan door de GitHub Pages-link.
+> De Action `Purge jsDelivr cache` blijft voorlopig bestaan voor die oude links.
 
 ## Lokaal testen
 

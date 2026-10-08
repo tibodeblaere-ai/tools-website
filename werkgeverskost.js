@@ -3,7 +3,7 @@
  * Eén zelfstandig bestand. Sluit overal in met:
  *
  *   <div id="werkgeverskost-tool"></div>
- *   <script src="https://cdn.jsdelivr.net/gh/tibodeblaere-ai/tools-website@main/werkgeverskost.js" defer></script>
+ *   <script src="https://tibodeblaere-ai.github.io/tools-website/werkgeverskost.js" defer></script>
  *
  * De tool toont GEEN bedrag: de bezoeker vult zijn situatie en gegevens in,
  * Nestor bezorgt de berekening per e-mail. Coëfficiënten staan dus niet in deze (publieke) code.

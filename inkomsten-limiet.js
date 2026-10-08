@@ -3,7 +3,7 @@
  * Eén zelfstandig bestand. Sluit overal in met:
  *
  *   <div id="inkomsten-limiet-tool"></div>
- *   <script src="https://cdn.jsdelivr.net/gh/tibodeblaere-ai/tools-website@main/inkomsten-limiet.js" defer></script>
+ *   <script src="https://tibodeblaere-ai.github.io/tools-website/inkomsten-limiet.js" defer></script>
  *
  * Inhoud aanpassen? Pas alleen het CONFIG-blok hieronder aan.
  * De logica eronder hoef je normaal niet aan te raken.
