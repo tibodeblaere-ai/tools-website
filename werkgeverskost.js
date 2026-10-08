@@ -28,11 +28,13 @@
       portalId: "7551812",
       formId: "3f04e1ec-065f-4adc-a6b4-372fef4a2f1d",
       region: "eu1",
-      hideFields: ["btw_nummer"], // velden van het formulier die je in deze tool niet wil tonen
+      // Velden van het formulier die je in deze tool niet wil tonen. Een veld dat in HubSpot VERPLICHT is,
+      // wordt nooit verborgen (anders kan niemand nog inzenden): maak het eerst optioneel in HubSpot.
+      hideFields: ["btw_nummer", "lastname"],
       // Teksten die we over die van HubSpot heen zetten (key = interne veldnaam). Enkel de zichtbare tekst
       // verandert; het veld zelf blijft hetzelfde, dus antwoorden komen in de juiste eigenschap terecht.
       labels: {
-        firstname: "Voornaam",
+        firstname: "Naam",
         lastname: "Achternaam",
         email: "E-mail",
         company: "Naam onderneming",
@@ -51,7 +53,7 @@
     },
 
     title: "Wat kost een flexi-jobber jou?",
-    intro: "Vul je situatie in. We bekijken de kost voor jouw situatie en nemen contact met je op.",
+    intro: "Vul je situatie in en vraag vrijblijvend een prijs op maat aan.",
 
     uurloon: { label: "Bruto-uurloon", hint: "€/uur", placeholder: "Bv. 15,00" },
 
@@ -87,20 +89,10 @@
     nextLabel: "Vraag mijn prijs aan",
     missingText: "Vul nog in: ",
     missingNames: { uurloon: "het bruto-uurloon", statuut: "het statuut", dienst: "wat je nodig hebt", niveau: "het type functie" },
-    contactTitle: "Bijna klaar! Waar mogen we je contacteren?",
+    contactTitle: "Bijna klaar! Waar mogen we je prijs naartoe sturen?",
     backLabel: "Wijzig",
-    thanksText: "Bedankt! Binnenkort nemen we contact met je op om de prijs voor jouw situatie samen te bespreken.",
-    loadError: "Het formulier kon niet geladen worden. Herlaad de pagina en probeer opnieuw.",
-
-    // Rechterpaneel
-    side: {
-      title: "Zo werkt het",
-      steps: [
-        "Je geeft het uurloon, het statuut en het aantal uren door.",
-        "We berekenen de kost voor jouw situatie.",
-        "Binnenkort nemen we contact op om de prijs samen te bespreken, zonder verplichtingen."
-      ]
-    }
+    thanksText: "Bedankt! We bekijken je aanvraag en bezorgen je snel een prijs op maat.",
+    loadError: "Het formulier kon niet geladen worden. Herlaad de pagina en probeer opnieuw."
   };
 
   /* ------------------------------------------------------------------ *
@@ -121,15 +113,12 @@
     }
     var P = "#" + CONFIG.mountId + " .";
     var css = `
-${P}${ROOT}{font-family:'DM Sans',system-ui,sans-serif;background:#fff;color:#575757;border-radius:28px;overflow:hidden;border:1px solid rgba(87,87,87,.10);display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,1fr)}
+${P}${ROOT}{font-family:'DM Sans',system-ui,sans-serif;background:#fff;color:#575757;border-radius:28px;overflow:hidden;border:1px solid rgba(87,87,87,.10);max-width:720px;margin:0 auto}
 ${P}${ROOT} *{box-sizing:border-box}
 ${P}${ROOT}-main{padding:36px}
-${P}${ROOT}-side{background:linear-gradient(160deg,#f73109,#c42505);color:#fff;padding:36px;display:flex;flex-direction:column;justify-content:flex-start}
-${P}${ROOT} h3{font-family:'Baloo Paaji 2',sans-serif;font-weight:700;color:#f73109;margin:0 0 8px;font-size:26px;line-height:1.15}
-${P}${ROOT}-side h3{color:#fff}
 ${P}${ROOT} h4{font-family:'Baloo Paaji 2',sans-serif;font-weight:700;color:#f73109;margin:8px 0 14px;font-size:19px;line-height:1.2}
 ${P}${ROOT}-muted{color:rgba(87,87,87,.62);font-size:14px;line-height:1.5;margin:0 0 24px}
-${P}${ROOT}-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px 24px;margin-bottom:22px}
+${P}${ROOT}-grid{display:grid;grid-template-columns:1fr;gap:22px;margin-bottom:22px}
 ${P}${ROOT}-field{margin-bottom:22px}
 ${P}${ROOT}-grid .${ROOT}-field{margin-bottom:0}
 ${P}${ROOT}-lbl{display:block;font-size:14px;font-weight:700;color:#575757;margin-bottom:8px}
@@ -154,9 +143,6 @@ ${P}${ROOT}-summary{display:flex;justify-content:space-between;align-items:flex-
 ${P}${ROOT}-back{background:none;border:none;color:#f73109;font-weight:700;font-size:13px;cursor:pointer;padding:0;font-family:inherit;flex:none;text-decoration:underline}
 ${P}${ROOT}-contact{animation:${ROOT}FadeIn .35s ease-out}
 @keyframes ${ROOT}FadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-${P}${ROOT}-steps{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-direction:column;gap:18px;counter-reset:s}
-${P}${ROOT}-steps li{counter-increment:s;display:flex;gap:14px;align-items:flex-start;font-size:15px;line-height:1.5}
-${P}${ROOT}-steps li::before{content:counter(s,decimal-leading-zero);font-family:'Baloo Paaji 2',sans-serif;font-weight:800;font-size:24px;line-height:1;flex:none;opacity:.85}
 ${P}${ROOT}-err{color:#d92b07;font-size:13px;margin:0}
 ${P}${ROOT} .hs-form-field{margin-bottom:14px}
 ${P}${ROOT} fieldset{max-width:none!important;border:0;padding:0;margin:0}
@@ -175,7 +161,7 @@ ${P}${ROOT} .hs-button{border:none;background:#f73109;color:#fff;border-radius:9
 ${P}${ROOT} .hs-button:hover{background:#d92b07}
 ${P}${ROOT} .hs-button:disabled{opacity:.5;cursor:not-allowed}
 ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24px;text-align:center;color:#575757;font-size:15px;line-height:1.5;animation:${ROOT}FadeIn .35s ease-out}
-@media (max-width:760px){${P}${ROOT}{grid-template-columns:1fr}${P}${ROOT}-main,${P}${ROOT}-side{padding:28px 22px}}`;
+@media (max-width:760px){${P}${ROOT}-main{padding:28px 22px}}`;
     var style = document.createElement("style");
     style.id = ROOT + "-styles";
     style.textContent = css;
@@ -232,7 +218,14 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
     var labels = CONFIG.hubspot.labels || {};
     var fields = fieldsByName(form);
     (CONFIG.hubspot.hideFields || []).forEach(function (name) {
-      if (fields[name] && fields[name].style.display !== "none") fields[name].style.display = "none";
+      var f = fields[name];
+      if (!f || f.style.display === "none") return;
+      if (f.querySelector(".hs-form-required, [required]")) {
+        if (!f.__wgkWarned && window.console) console.warn("Werkgeverskost: veld '" + name + "' is verplicht in HubSpot en wordt dus niet verborgen.");
+        f.__wgkWarned = true;
+        return;
+      }
+      f.style.display = "none";
     });
     Object.keys(labels).forEach(function (name) {
       var span = fields[name] && fields[name].querySelector("label span:first-child");
@@ -283,9 +276,6 @@ ${P}${ROOT} .submitted-message{background:#feeae6;border-radius:18px;padding:24p
           '<div id="' + ROOT + '-hsform"></div>' +
         "</div>" +
         "</div>" +
-        '<div class="' + ROOT + '-side"><h3>' + esc(C.side.title) + '</h3><ol class="' + ROOT + '-steps">' +
-          C.side.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") +
-        "</ol></div>" +
       "</div>";
   }
 
