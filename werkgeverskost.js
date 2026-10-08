@@ -30,11 +30,11 @@
       region: "eu1",
       // Velden van het formulier die je in deze tool niet wil tonen. Een veld dat in HubSpot VERPLICHT is,
       // wordt nooit verborgen (anders kan niemand nog inzenden): maak het eerst optioneel in HubSpot.
-      hideFields: ["btw_nummer", "lastname"],
+      hideFields: ["btw_nummer"],
       // Teksten die we over die van HubSpot heen zetten (key = interne veldnaam). Enkel de zichtbare tekst
       // verandert; het veld zelf blijft hetzelfde, dus antwoorden komen in de juiste eigenschap terecht.
       labels: {
-        firstname: "Naam",
+        firstname: "Voornaam",
         lastname: "Achternaam",
         email: "E-mail",
         company: "Naam onderneming",
